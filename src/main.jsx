@@ -324,7 +324,7 @@ function CanvasCard({ game }){
       {channelPartsList.length > 1 ? channelPartsList.map((part, idx) => (
         <React.Fragment key={`${part}-${idx}`}>
           <span style={{ color: channelColor(part) }}>{part}</span>
-          {idx < channelPartsList.length - 1 && <span style={{ color: '#1b0b06' }}> e </span>}
+          {idx < channelPartsList.length - 1 && <span style={{ color: '#1b0b06' }}> / </span>}
         </React.Fragment>
       )) : <span style={{ color: channelColor(channelText) }}>{channelText}</span>}
     </div>
@@ -408,10 +408,10 @@ function getChannelFontSize(channel) {
   const value = displayChannel(channel)
   const parts = channelParts(value)
   const len = value.length
-  if (parts.length >= 4 || len >= 36) return 13
-  if (parts.length >= 3 || len >= 30) return 15
-  if (parts.length >= 2 || len >= 22) return 17
-  if (len >= 16) return 20
+  if (parts.length >= 4 || len >= 38) return 14
+  if (parts.length >= 3 || len >= 31) return 16
+  if (parts.length >= 2 || len >= 24) return 19
+  if (len >= 17) return 21
   return 25
 }
 
@@ -431,7 +431,7 @@ function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
 
   for (const part of parts) {
     const test = [...current, part]
-    const textValue = test.join(' e ')
+    const textValue = test.join(' / ')
     if (!current.length || ctx.measureText(textValue).width <= maxWidth) {
       current = test
     } else {
@@ -450,11 +450,11 @@ function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
     const pieces = []
     lineParts.forEach((part, idx) => {
       pieces.push({ text: part, color: channelColor(part) })
-      if (idx < lineParts.length - 1) pieces.push({ text: ' e ', color: '#1b0b06' })
+      if (idx < lineParts.length - 1) pieces.push({ text: ' / ', color: '#1b0b06' })
     })
     const totalWidth = pieces.reduce((sum, piece) => sum + ctx.measureText(piece.text).width, 0)
     if (totalWidth > maxWidth) {
-      drawCenteredText(ctx, lineParts.join(' e '), x, yLine, maxWidth, `900 ${fontSize}px Arial, Helvetica, sans-serif`, channelColor(lineParts[0]))
+      drawCenteredText(ctx, lineParts.join(' / '), x, yLine, maxWidth, `900 ${fontSize}px Arial, Helvetica, sans-serif`, channelColor(lineParts[0]))
       return
     }
     let cursor = x - totalWidth / 2
@@ -670,7 +670,7 @@ function App(){
       const current = displayChannel(prev.channel)
       const currentParts = channelParts(current).map(norm)
       if (currentParts.includes(norm(cleaned))) return prev
-      return { ...prev, channel: current ? `${current} e ${cleaned}` : cleaned }
+      return { ...prev, channel: current ? `${current} / ${cleaned}` : cleaned }
     })
   }
   function resetDraft(){ setDraft(defaultGame()); setEditingId(null) }
