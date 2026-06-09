@@ -191,7 +191,23 @@ function cleanRoundValue(value) {
 function cleanChannelValue(value) {
   const v = norm(value)
   if (v === 'deixar em branco') return 'Deixar em branco'
-  return value
+  const raw = String(value || '').trim()
+  if (!raw) return raw
+  const parts = raw
+    .split(/\s*(?:\/|,|\+| e )\s*/i)
+    .map(v => v.trim())
+    .filter(Boolean)
+  if (parts.length <= 1) return raw
+  const unique = []
+  const seen = new Set()
+  for (const part of parts) {
+    const key = norm(part)
+    if (!seen.has(key)) {
+      seen.add(key)
+      unique.push(part)
+    }
+  }
+  return unique.join(', ')
 }
 
 function displayChannel(value) {
@@ -305,8 +321,8 @@ function CanvasCard({ game }){
   const roundText = displayRound(game.round)
   const channelText = displayChannel(game.channel)
   const channelFontSize = getChannelFontSize(channelText)
-  const channelPartsList = channelParts(channelText)
-  const multiChannel = channelPartsList.length > 1
+  const channelTokensList = channelTokens(channelText)
+  const multiChannel = channelParts(channelText).length > 1
 
   return <div className="canvasRow">
     <div className="matchBox">
@@ -321,12 +337,9 @@ function CanvasCard({ game }){
       <div className="oddsCell"><span>{game.oddHome || '—'}</span><span>{game.oddDraw || '—'}</span><span>{game.oddAway || '—'}</span></div>
     </div>
     <div className={`channelBox${multiChannel ? ' multi' : ''}`} style={{ fontSize: `${channelFontSize}px` }}>
-      {channelPartsList.length > 1 ? channelPartsList.map((part, idx) => (
-        <React.Fragment key={`${part}-${idx}`}>
-          <span style={{ color: channelColor(part) }}>{part}</span>
-          {idx < channelPartsList.length - 1 && <span style={{ color: '#1b0b06' }}> / </span>}
-        </React.Fragment>
-      )) : <span style={{ color: channelColor(channelText) }}>{channelText}</span>}
+      {channelTokensList.map((token, idx) => (
+        <span key={`${token.text}-${idx}`} style={{ color: token.type === 'channel' ? channelColor(token.text) : '#1b0b06' }}>{token.text}</span>
+      ))}
     </div>
   </div>
 }
@@ -401,6 +414,18 @@ function channelParts(channel) {
     .filter(Boolean)
 }
 
+function channelTokens(channel) {
+  const parts = channelParts(channel)
+  if (!parts.length) return []
+
+  const tokens = []
+  parts.forEach((part, index) => {
+    tokens.push({ type: 'channel', text: part })
+    if (index < parts.length - 1) tokens.push({ type: 'sep', text: ',\u00A0' })
+  })
+  return tokens
+}
+
 function hasMultipleChannels(channel) {
   return channelParts(channel).length > 1
 }
@@ -408,104 +433,40 @@ function hasMultipleChannels(channel) {
 function getChannelFontSize(channel) {
   const value = displayChannel(channel)
   const parts = channelParts(value)
-  const renderedLen = parts.join(' / ').length
+  const renderedLen = parts.join(', ').length
 
-  if (parts.length >= 4 || renderedLen >= 38) return 14
-  if (parts.length >= 3 || renderedLen >= 31) return 16
-  if (parts.length >= 2 || renderedLen >= 24) return 18
-  if (parts.length >= 2) return 20
-  if (renderedLen >= 18) return 21
-  return 25
+  // Visual mais limpo e padronizado para a coluna de transmissão.
+  if (!value) return 14
+  if (parts.length >= 4 || renderedLen >= 36) return 10
+  if (parts.length >= 3 || renderedLen >= 28) return 11
+  if (parts.length >= 2 || renderedLen >= 21) return 12
+  if (renderedLen >= 16) return 13
+  return 14
 }
 
 function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
-  const parts = channelParts(channel)
-  if (!parts.length) return
+  const tokens = channelTokens(channel)
+  if (!tokens.length) return
 
-  const fontSize = getChannelFontSize(channel)
-  const lineHeight = fontSize <= 14 ? 15 : fontSize <= 17 ? 18 : 20
+  let fontSize = getChannelFontSize(channel)
   ctx.font = `900 ${fontSize}px Arial, Helvetica, sans-serif`
   ctx.textBaseline = 'middle'
-  ctx.textAlign = 'center'
-
-  // Uma transmissão só: fica igual à prévia do site.
-  // Exemplo: YouTube (CazéTV) pode quebrar em 2 linhas sem virar "YouTube / CazéTV".
-  if (parts.length === 1) {
-    const original = displayChannel(channel)
-    const preferredBreak = original.replace(/\s*\(/, ' (')
-    const words = preferredBreak.split(/\s+/).filter(Boolean)
-    const lines = []
-
-    let current = words[0] || ''
-    for (let i = 1; i < words.length; i += 1) {
-      const test = `${current} ${words[i]}`
-      if (ctx.measureText(test).width <= maxWidth) {
-        current = test
-      } else {
-        lines.push(current)
-        current = words[i]
-      }
-    }
-    if (current) lines.push(current)
-
-    const finalLines = lines.slice(0, 2)
-    if (finalLines.length > 2) finalLines.length = 2
-
-    // Se ainda ficar muito grande, aí sim reduz um pouco a fonte antes de cortar.
-    let finalFontSize = fontSize
-    while (finalFontSize > 14 && finalLines.some(line => ctx.measureText(line).width > maxWidth)) {
-      finalFontSize -= 1
-      ctx.font = `900 ${finalFontSize}px Arial, Helvetica, sans-serif`
-    }
-
-    const finalLineHeight = finalFontSize <= 15 ? 16 : finalFontSize <= 18 ? 18 : 20
-    const totalHeight = (finalLines.length - 1) * finalLineHeight
-    ctx.fillStyle = channelColor(original)
-
-    finalLines.forEach((line, index) => {
-      ctx.fillText(line, x, y - totalHeight / 2 + index * finalLineHeight)
-    })
-    return
-  }
-
-  // Mais de uma transmissão: separa por barra e mantém cores individuais.
   ctx.textAlign = 'left'
-  const maxLines = parts.length >= 3 ? 2 : 1
-  const lines = []
-  let current = []
 
-  for (const part of parts) {
-    const test = [...current, part]
-    const textValue = test.join(' / ')
-    if (!current.length || ctx.measureText(textValue).width <= maxWidth) {
-      current = test
-    } else {
-      lines.push(current)
-      current = [part]
-      if (lines.length === maxLines - 1) break
-    }
+  const measure = () => tokens.reduce((sum, token) => sum + ctx.measureText(token.text).width, 0)
+
+  while (fontSize > 9 && measure() > maxWidth) {
+    fontSize -= 1
+    ctx.font = `900 ${fontSize}px Arial, Helvetica, sans-serif`
   }
-  if (current.length) lines.push(current)
 
-  const finalLines = lines.slice(0, maxLines)
-  const totalHeight = (finalLines.length - 1) * lineHeight
+  const totalWidth = measure()
+  let cursor = x - totalWidth / 2
 
-  finalLines.forEach((lineParts, lineIndex) => {
-    const yLine = y - totalHeight / 2 + lineIndex * lineHeight
-    const pieces = []
-    lineParts.forEach((part, idx) => {
-      pieces.push({ text: part, color: channelColor(part) })
-      if (idx < lineParts.length - 1) pieces.push({ text: ' / ', color: '#1b0b06' })
-    })
-
-    const totalWidth = pieces.reduce((sum, piece) => sum + ctx.measureText(piece.text).width, 0)
-    let cursor = x - totalWidth / 2
-
-    pieces.forEach(piece => {
-      ctx.fillStyle = piece.color
-      ctx.fillText(piece.text, cursor, yLine)
-      cursor += ctx.measureText(piece.text).width
-    })
+  tokens.forEach(token => {
+    ctx.fillStyle = token.type === 'channel' ? channelColor(token.text) : '#1b0b06'
+    ctx.fillText(token.text, cursor, y)
+    cursor += ctx.measureText(token.text).width
   })
 }
 
@@ -708,12 +669,11 @@ function App(){
       setDraftField('channel', cleaned)
       return
     }
-
     setDraft(prev => {
       const current = displayChannel(prev.channel)
       const currentParts = channelParts(current).map(norm)
       if (currentParts.includes(norm(cleaned))) return prev
-      return { ...prev, channel: current ? `${current} / ${cleaned}` : cleaned }
+      return { ...prev, channel: cleanChannelValue(current ? `${current}, ${cleaned}` : cleaned) }
     })
   }
   function resetDraft(){ setDraft(defaultGame()); setEditingId(null) }
