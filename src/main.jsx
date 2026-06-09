@@ -658,6 +658,21 @@ function App(){
       return next
     })
   }
+
+  function addTransmissionToDraft(value){
+    const cleaned = cleanChannelValue(value)
+    if (!displayChannel(cleaned)) {
+      setDraftField('channel', cleaned)
+      return
+    }
+
+    setDraft(prev => {
+      const current = displayChannel(prev.channel)
+      const currentParts = channelParts(current).map(norm)
+      if (currentParts.includes(norm(cleaned))) return prev
+      return { ...prev, channel: current ? `${current} e ${cleaned}` : cleaned }
+    })
+  }
   function resetDraft(){ setDraft(defaultGame()); setEditingId(null) }
   function addOrSave(){
     if (!draft.home || !draft.away || !draft.competition) return alert('Preencha campeonato, mandante e visitante.')
