@@ -6,35 +6,148 @@ const BRAND = 'DICAS93TV'
 const INSTAGRAM = '@dicas93tv'
 
 const competitions = [
-  { name: 'Brasileirão Série A', country: 'Brasil', teams: ['Flamengo','Palmeiras','Corinthians','São Paulo','Santos','Vasco da Gama','Botafogo','Fluminense','Cruzeiro','Atlético-MG','Grêmio','Internacional','Bahia','Fortaleza','Ceará','Sport','Vitória','Mirassol','Bragantino','Juventude'] },
-  { name: 'Brasileirão Série B', country: 'Brasil', teams: ['Athletico-PR','Coritiba','Goiás','Vila Nova','Avaí','Chapecoense','Criciúma','Cuiabá','Remo','Paysandu','CRB','CSA','Novorizontino','Operário','América-MG','Atlético-GO','Botafogo-SP','Ferroviária','Volta Redonda','Amazonas'] },
-  { name: 'Copa do Brasil', country: 'Brasil', teams: ['Flamengo','Palmeiras','Corinthians','São Paulo','Santos','Vasco da Gama','Botafogo','Fluminense','Cruzeiro','Atlético-MG','Grêmio','Internacional','Bahia','Fortaleza','Athletico-PR','Coritiba','Sport','Ceará','Vitória','Juventude'] },
-  { name: 'Campeonato Paulista', country: 'Brasil', teams: ['Corinthians','Palmeiras','São Paulo','Santos','Bragantino','Ponte Preta','Guarani','Mirassol','Ituano','Ferroviária','São Bernardo FC','Novorizontino'] },
-  { name: 'Campeonato Carioca', country: 'Brasil', teams: ['Flamengo','Fluminense','Vasco da Gama','Botafogo','Boavista','Madureira','Volta Redonda','Portuguesa-RJ','Bangu','Nova Iguaçu'] },
-  { name: 'Campeonato Mineiro', country: 'Brasil', teams: ['Atlético-MG','Cruzeiro','América-MG','Tombense','Villa Nova-MG','Democrata-GV','Athletic Club','Pouso Alegre'] },
-  { name: 'Campeonato Gaúcho', country: 'Brasil', teams: ['Grêmio','Internacional','Juventude','Brasil de Pelotas','Caxias','São José-RS','Novo Hamburgo','Ypiranga-RS'] },
-  { name: 'Libertadores', country: 'América do Sul', teams: ['Flamengo','Palmeiras','São Paulo','Botafogo','River Plate','Boca Juniors','Racing','Estudiantes','Peñarol','Nacional','Colo-Colo','Universidad de Chile','Bolívar','The Strongest','Olimpia','Cerro Porteño','Atlético Nacional','Independiente del Valle','LDU Quito','Barcelona SC'] },
-  { name: 'Sul-Americana', country: 'América do Sul', teams: ['Vasco da Gama','Cruzeiro','Corinthians','Bahia','Lanús','Defensa y Justicia','San Lorenzo','Independiente','Universidad Católica','Colo-Colo','Olimpia','Cerro Porteño','LDU Quito','Barcelona SC','Deportivo Cali','Atlético Nacional','Blooming','Carabobo','Melgar','Sporting Cristal'] },
-  { name: 'Premier League', country: 'Inglaterra', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
-  { name: 'La Liga', country: 'Espanha', teams: ['Real Madrid','Barcelona','Atlético de Madrid','Athletic Club','Real Sociedad','Villarreal','Valencia','Sevilla','Betis','Celta de Vigo','Osasuna','Getafe','Mallorca','Girona','Espanyol','Alavés','Rayo Vallecano','Levante','Elche','Oviedo'] },
-  { name: 'Serie A Italiana', country: 'Itália', teams: ['Inter de Milão','Milan','Juventus','Napoli','Roma','Lazio','Atalanta','Fiorentina','Bologna','Torino','Genoa','Udinese','Sassuolo','Parma','Cagliari','Lecce','Verona','Como','Cremonese','Pisa'] },
+  { name: 'Copa das Nações Africanas', country: 'África', teams: [] },
+  { name: 'Liga dos Campeões da CAF', country: 'África', teams: ['Al Ahly','Zamalek','Wydad Casablanca','Raja Casablanca','Esperance Tunis','Mamelodi Sundowns','TP Mazembe','Simba SC','Young Africans','CR Belouizdad','Orlando Pirates','Pyramids FC'] },
+  { name: 'Taça das Confederações da CAF', country: 'África', teams: [] },
+  { name: 'Copa da COSAFA', country: 'África', teams: [] },
+  { name: 'Premiership', country: 'África do Sul', teams: [] },
+  { name: 'Liga dos Campeões da AFC', country: 'Ásia', teams: ['Al-Hilal','Al-Nassr','Al-Ittihad','Al-Ahli','Urawa Reds','Vissel Kobe','Yokohama F. Marinos','Ulsan HD','Jeonbuk Hyundai','Shanghai Port','Al-Ain','Al-Sadd','Persepolis','Esteghlal'] },
+  { name: 'Bundesliga', country: 'Áustria', teams: ['Bayern de Munique','Borussia Dortmund','Bayer Leverkusen','RB Leipzig','Eintracht Frankfurt','Stuttgart','Wolfsburg','Freiburg','Mainz','Augsburg','Werder Bremen','Borussia Mönchengladbach','Union Berlin','Hoffenheim','Heidenheim','St. Pauli','Hamburgo','Colônia'] },
   { name: 'Bundesliga', country: 'Alemanha', teams: ['Bayern de Munique','Borussia Dortmund','Bayer Leverkusen','RB Leipzig','Eintracht Frankfurt','Stuttgart','Wolfsburg','Freiburg','Mainz','Augsburg','Werder Bremen','Borussia Mönchengladbach','Union Berlin','Hoffenheim','Heidenheim','St. Pauli','Hamburgo','Colônia'] },
+  { name: 'Copa da Alemanha', country: 'Alemanha', teams: [] },
+  { name: 'Supercopa', country: 'Alemanha', teams: [] },
+  { name: 'Copa Ouro', country: 'América do Norte e Central', teams: [] },
+  { name: 'Liga das Nações da CONCACAF', country: 'América do Norte e Central', teams: [] },
+  { name: 'Copa das Ligas', country: 'América do Norte e Central', teams: [] },
+  { name: 'Copa América', country: 'América do Sul', teams: [] },
+  { name: 'Copa Libertadores', country: 'América do Sul', teams: ['Flamengo','Palmeiras','São Paulo','Botafogo','River Plate','Boca Juniors','Racing','Estudiantes','Peñarol','Nacional','Colo-Colo','Universidad de Chile','Bolívar','The Strongest','Olimpia','Cerro Porteño','Atlético Nacional','Independiente del Valle','LDU Quito','Barcelona SC'] },
+  { name: 'Copa Sul-Americana', country: 'América do Sul', teams: ['Vasco da Gama','Cruzeiro','Corinthians','Bahia','Lanús','Defensa y Justicia','San Lorenzo','Independiente','Universidad Católica','Colo-Colo','Olimpia','Cerro Porteño','LDU Quito','Barcelona SC','Deportivo Cali','Atlético Nacional','Blooming','Carabobo','Melgar','Sporting Cristal'] },
+  { name: 'Recopa Sul-Americana', country: 'América do Sul', teams: [] },
+  { name: 'Copa América Feminina', country: 'América do Sul', teams: [] },
+  { name: 'Brasil Ladies Cup', country: 'América do Sul', teams: [] },
+  { name: 'Liga Profissional Saudita', country: 'Arábia Saudita', teams: ['Al-Hilal','Al-Nassr','Al-Ittihad','Al-Ahli','Al-Shabab','Al-Ettifaq','Al-Taawoun','Al-Fateh','Al-Riyadh','Al-Qadsiah','Al-Wehda','Al-Khaleej'] },
+  { name: 'Divisão 1', country: 'Arábia Saudita', teams: [] },
+  { name: 'Copa do Rei', country: 'Arábia Saudita', teams: [] },
+  { name: 'Supercopa', country: 'Arábia Saudita', teams: [] },
+  { name: 'Liga Profesional', country: 'Argentina', teams: [] },
+  { name: 'Copa Argentina', country: 'Argentina', teams: [] },
+  { name: 'Supercopa', country: 'Argentina', teams: [] },
+  { name: 'Supercopa Internacional', country: 'Argentina', teams: [] },
+  { name: 'Liga Jupiler', country: 'Bélgica', teams: [] },
+  { name: 'Copa da Bélgica', country: 'Bélgica', teams: [] },
+  { name: 'División Profesional', country: 'Bolívia', teams: [] },
+  { name: 'Brasileirão Betano', country: 'Brasil', teams: ['Flamengo','Palmeiras','Corinthians','São Paulo','Santos','Vasco da Gama','Botafogo','Fluminense','Cruzeiro','Atlético-MG','Grêmio','Internacional','Bahia','Fortaleza','Ceará','Sport','Vitória','Mirassol','Bragantino','Juventude'] },
+  { name: 'Brasileirão Série B', country: 'Brasil', teams: ['Athletico-PR','Coritiba','Goiás','Vila Nova','Avaí','Chapecoense','Criciúma','Cuiabá','Remo','Paysandu','CRB','CSA','Novorizontino','Operário','América-MG','Atlético-GO','Botafogo-SP','Ferroviária','Volta Redonda','Amazonas'] },
+  { name: 'Série C', country: 'Brasil', teams: ['Náutico','Paysandu','Remo','Figueirense','Londrina','São Bernardo','Botafogo-PB','CSA','Confiança','Ypiranga-RS','ABC','Volta Redonda'] },
+  { name: 'Série D', country: 'Brasil', teams: ['Retrô','Portuguesa-RJ','Treze','Manaus','Maringá','Itabaiana','Brasiliense','Anápolis','Cianorte','Inter de Limeira'] },
+  { name: 'Baiano', country: 'Brasil', teams: [] },
+  { name: 'Carioca Superbet', country: 'Brasil', teams: ['Flamengo','Fluminense','Vasco da Gama','Botafogo','Boavista','Madureira','Volta Redonda','Portuguesa-RJ','Bangu','Nova Iguaçu'] },
+  { name: 'Catarinense', country: 'Brasil', teams: [] },
+  { name: 'Cearense Superbet', country: 'Brasil', teams: [] },
+  { name: 'Gauchão Superbet', country: 'Brasil', teams: ['Grêmio','Internacional','Juventude','Brasil de Pelotas','Caxias','São José-RS','Novo Hamburgo','Ypiranga-RS'] },
+  { name: 'Goiano', country: 'Brasil', teams: [] },
+  { name: 'Matogrossense', country: 'Brasil', teams: [] },
+  { name: 'Mineiro', country: 'Brasil', teams: ['Atlético-MG','Cruzeiro','América-MG','Tombense','Villa Nova-MG','Democrata-GV','Athletic Club','Pouso Alegre'] },
+  { name: 'Mineiro 2', country: 'Brasil', teams: [] },
+  { name: 'Mineiro 3', country: 'Brasil', teams: [] },
+  { name: 'Paranaense', country: 'Brasil', teams: [] },
+  { name: 'Paulista', country: 'Brasil', teams: ['Corinthians','Palmeiras','São Paulo','Santos','Bragantino','Ponte Preta','Guarani','Mirassol','Ituano','Ferroviária','São Bernardo FC','Novorizontino'] },
+  { name: 'Pernambucano', country: 'Brasil', teams: [] },
+  { name: 'Copa Betano do Brasil', country: 'Brasil', teams: ['Flamengo','Palmeiras','Corinthians','São Paulo','Santos','Vasco da Gama','Botafogo','Fluminense','Cruzeiro','Atlético-MG','Grêmio','Internacional','Bahia','Fortaleza','Athletico-PR','Coritiba','Sport','Ceará','Vitória','Juventude'] },
+  { name: 'Copa do Brasil Sub-20', country: 'Brasil', teams: [] },
+  { name: 'Copa Norte', country: 'Brasil', teams: [] },
+  { name: 'Taça Sul-Sudeste', country: 'Brasil', teams: [] },
+  { name: 'Copa Verde', country: 'Brasil', teams: [] },
+  { name: 'Copa do Nordeste Superbet', country: 'Brasil', teams: [] },
+  { name: 'Supercopa do Brasil', country: 'Brasil', teams: [] },
+  { name: 'Recopa Gaúcha', country: 'Brasil', teams: [] },
+  { name: 'Brasileirão Sub-23', country: 'Brasil', teams: [] },
+  { name: 'Brasileirão Sub-20', country: 'Brasil', teams: [] },
+  { name: 'Copinha', country: 'Brasil', teams: [] },
+  { name: 'Brasileirão Feminino', country: 'Brasil', teams: [] },
+  { name: 'Paulista Feminino', country: 'Brasil', teams: [] },
+  { name: 'Copa do Brasil Women', country: 'Brasil', teams: [] },
+  { name: 'Parva Liga', country: 'Bulgária', teams: [] },
+  { name: 'Liga de Primera', country: 'Chile', teams: [] },
+  { name: 'Superliga', country: 'China', teams: [] },
+  { name: 'Primeira A', country: 'Colômbia', teams: [] },
+  { name: 'Copa da Colômbia', country: 'Colômbia', teams: [] },
+  { name: 'HNL', country: 'Croácia', teams: [] },
+  { name: 'Copa da Croácia', country: 'Croácia', teams: [] },
+  { name: 'Superliga', country: 'Dinamarca', teams: [] },
+  { name: '1ª Divisão', country: 'Dinamarca', teams: [] },
+  { name: 'Premier League', country: 'Egito', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
+  { name: 'Copa do Egito', country: 'Egito', teams: [] },
+  { name: 'Copa da Liga', country: 'Egito', teams: [] },
+  { name: 'Liga Pro', country: 'Equador', teams: [] },
+  { name: 'Copa do Equador', country: 'Equador', teams: [] },
+  { name: 'Premiership', country: 'Escócia', teams: [] },
+  { name: 'Copa da Escócia', country: 'Escócia', teams: [] },
+  { name: 'Copa da Liga', country: 'Escócia', teams: [] },
+  { name: 'LaLiga', country: 'Espanha', teams: ['Real Madrid','Barcelona','Atlético de Madrid','Athletic Club','Real Sociedad','Villarreal','Valencia','Sevilla','Betis','Celta de Vigo','Osasuna','Getafe','Mallorca','Girona','Espanyol','Alavés','Rayo Vallecano','Levante','Elche','Oviedo'] },
+  { name: 'LaLiga2', country: 'Espanha', teams: ['Valladolid','Eibar','Leganés','Sporting Gijón','Zaragoza','Levante','Racing Santander','Tenerife','Burgos','Almería'] },
+  { name: 'Copa do Rei', country: 'Espanha', teams: [] },
+  { name: 'Supercopa', country: 'Espanha', teams: [] },
+  { name: 'Supercopa Feminina', country: 'Espanha', teams: [] },
+  { name: 'MLS', country: 'EUA', teams: ['Inter Miami','LA Galaxy','Los Angeles FC','New York City FC','New York Red Bulls','Atlanta United','Orlando City','Columbus Crew','Seattle Sounders','Portland Timbers','Chicago Fire','FC Dallas','Austin FC','Nashville SC','Toronto FC','Vancouver Whitecaps'] },
+  { name: 'Copa dos Estados Unidos', country: 'EUA', teams: [] },
+  { name: 'Liga dos Campeões', country: 'Europa', teams: ['Real Madrid','Barcelona','Atlético de Madrid','Arsenal','Chelsea','Liverpool','Manchester City','PSG','Bayern de Munique','Borussia Dortmund','Inter de Milão','Milan','Juventus','Napoli','Benfica','Porto','Sporting','Ajax','PSV','Celtic'] },
+  { name: 'Liga Europa', country: 'Europa', teams: ['Manchester United','Tottenham','Roma','Lazio','Milan','Porto','Benfica','Sporting','Ajax','PSV','Fenerbahçe','Galatasaray','Olympiacos','Rangers','Celtic','Sevilla','Betis','Lyon','Marseille','Frankfurt'] },
+  { name: 'Liga Conferência', country: 'Europa', teams: ['Chelsea','Crystal Palace','Fiorentina','Betis','Lille','Nice','Copenhagen','Gent','AZ Alkmaar','Rapid Wien','Legia Warszawa','Partizan','Hearts','Molde','Djurgården','Shakhtar Donetsk'] },
+  { name: 'Liga das Nações da UEFA', country: 'Europa', teams: [] },
+  { name: 'Supercopa da UEFA', country: 'Europa', teams: [] },
+  { name: 'Liga dos Campeões - Feminina', country: 'Europa', teams: [] },
+  { name: 'Eurocopa Feminina', country: 'Europa', teams: [] },
+  { name: 'Liga das Nações da UEFA - Feminina', country: 'Europa', teams: [] },
   { name: 'Ligue 1', country: 'França', teams: ['PSG','Marseille','Lyon','Monaco','Lille','Nice','Rennes','Lens','Strasbourg','Nantes','Toulouse','Montpellier','Brest','Auxerre','Angers','Le Havre','Metz','Paris FC'] },
-  { name: 'Liga Portugal', country: 'Portugal', teams: ['Benfica','Porto','Sporting','Braga','Vitória SC','Boavista','Casa Pia','Estoril','Famalicão','Gil Vicente','Moreirense','Nacional','Rio Ave','Santa Clara','Arouca','Tondela','Alverca','Estrela Amadora'] },
-  { name: 'Champions League', country: 'Europa', teams: ['Real Madrid','Barcelona','Atlético de Madrid','Arsenal','Chelsea','Liverpool','Manchester City','PSG','Bayern de Munique','Borussia Dortmund','Inter de Milão','Milan','Juventus','Napoli','Benfica','Porto','Sporting','Ajax','PSV','Celtic'] },
-  { name: 'Europa League', country: 'Europa', teams: ['Manchester United','Tottenham','Roma','Lazio','Milan','Porto','Benfica','Sporting','Ajax','PSV','Fenerbahçe','Galatasaray','Olympiacos','Rangers','Celtic','Sevilla','Betis','Lyon','Marseille','Frankfurt'] },
-  { name: 'Conference League', country: 'Europa', teams: ['Chelsea','Crystal Palace','Fiorentina','Betis','Lille','Nice','Copenhagen','Gent','AZ Alkmaar','Rapid Wien','Legia Warszawa','Partizan','Hearts','Molde','Djurgården','Shakhtar Donetsk'] },
-  { name: 'MLS', country: 'Estados Unidos', teams: ['Inter Miami','LA Galaxy','Los Angeles FC','New York City FC','New York Red Bulls','Atlanta United','Orlando City','Columbus Crew','Seattle Sounders','Portland Timbers','Chicago Fire','FC Dallas','Austin FC','Nashville SC','Toronto FC','Vancouver Whitecaps'] },
+  { name: 'Copa da França', country: 'França', teams: [] },
+  { name: 'Supercopa', country: 'França', teams: [] },
+  { name: 'Superliga', country: 'Grécia', teams: [] },
+  { name: 'Copa da Grécia', country: 'Grécia', teams: [] },
+  { name: 'Supercopa', country: 'Grécia', teams: [] },
+  { name: 'Premier League', country: 'Inglaterra', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
+  { name: 'Championship', country: 'Inglaterra', teams: ['Leicester City','Southampton','Ipswich Town','Norwich City','West Brom','Middlesbrough','Watford','Hull City','Swansea City','Stoke City'] },
+  { name: 'Copa da Inglaterra', country: 'Inglaterra', teams: [] },
+  { name: 'Copa da Liga Inglesa', country: 'Inglaterra', teams: [] },
+  { name: 'Premiership', country: 'Irlanda do Norte', teams: [] },
+  { name: 'Championship', country: 'Irlanda do Norte', teams: ['Leicester City','Southampton','Ipswich Town','Norwich City','West Brom','Middlesbrough','Watford','Hull City','Swansea City','Stoke City'] },
+  { name: 'Serie A', country: 'Itália', teams: ['Inter de Milão','Milan','Juventus','Napoli','Roma','Lazio','Atalanta','Fiorentina','Bologna','Torino','Genoa','Udinese','Sassuolo','Parma','Cagliari','Lecce','Verona','Como','Cremonese','Pisa'] },
+  { name: 'Serie B', country: 'Itália', teams: ['Palermo','Sampdoria','Bari','Parma','Venezia','Cremonese','Pisa','Brescia','Modena','Catanzaro'] },
+  { name: 'Copa da Itália', country: 'Itália', teams: [] },
+  { name: 'Supercopa', country: 'Itália', teams: [] },
+  { name: 'Botola Pro', country: 'Marrocos', teams: [] },
   { name: 'Liga MX', country: 'México', teams: ['América','Chivas','Cruz Azul','Pumas','Tigres','Monterrey','Toluca','Pachuca','León','Santos Laguna','Atlas','Tijuana','Necaxa','Puebla','Querétaro','Juárez','Mazatlán','Atlético San Luis'] },
-  { name: 'Campeonato Argentino', country: 'Argentina', teams: ['River Plate','Boca Juniors','Racing','Independiente','San Lorenzo','Estudiantes','Vélez Sarsfield','Lanús','Huracán','Rosario Central','Newell’s Old Boys','Talleres','Belgrano','Godoy Cruz','Defensa y Justicia','Argentinos Juniors'] },
-  { name: 'Campeonato Chileno', country: 'Chile', teams: ['Colo-Colo','Universidad de Chile','Universidad Católica','Unión Española','Palestino','Audax Italiano','Everton','Cobresal','Huachipato','O’Higgins','Coquimbo Unido','La Serena'] },
-  { name: 'Campeonato Colombiano', country: 'Colômbia', teams: ['Atlético Nacional','Millonarios','América de Cali','Deportivo Cali','Junior Barranquilla','Santa Fe','Once Caldas','Tolima','Medellín','Deportivo Pereira','Envigado','La Equidad'] },
-  { name: 'Campeonato Saudita', country: 'Arábia Saudita', teams: ['Al-Hilal','Al-Nassr','Al-Ittihad','Al-Ahli','Al-Shabab','Al-Ettifaq','Al-Taawoun','Al-Fateh','Al-Riyadh','Al-Qadsiah','Al-Wehda','Al-Khaleej'] },
-  { name: 'J-League', country: 'Japão', teams: ['Vissel Kobe','Yokohama F. Marinos','Urawa Reds','Kawasaki Frontale','Sanfrecce Hiroshima','Kashima Antlers','FC Tokyo','Cerezo Osaka','Gamba Osaka','Nagoya Grampus','Avispa Fukuoka','Consadole Sapporo'] },
-  { name: 'K League', country: 'Coreia do Sul', teams: ['Ulsan HD','Jeonbuk Hyundai','FC Seoul','Pohang Steelers','Suwon FC','Daegu FC','Daejeon Hana Citizen','Jeju United','Gangwon FC','Gwangju FC','Incheon United','Gimcheon Sangmu'] },
-  { name: 'AFC Champions League', country: 'Ásia', teams: ['Al-Hilal','Al-Nassr','Al-Ittihad','Al-Ahli','Urawa Reds','Vissel Kobe','Yokohama F. Marinos','Ulsan HD','Jeonbuk Hyundai','Shanghai Port','Al-Ain','Al-Sadd','Persepolis','Esteghlal'] },
-  { name: 'CAF Champions League', country: 'África', teams: ['Al Ahly','Zamalek','Wydad Casablanca','Raja Casablanca','Esperance Tunis','Mamelodi Sundowns','TP Mazembe','Simba SC','Young Africans','CR Belouizdad','Orlando Pirates','Pyramids FC'] },
-  { name: 'Copa do Mundo de Clubes', country: 'FIFA', teams: ['Flamengo','Fluminense','Palmeiras','Botafogo','Real Madrid','Barcelona','Manchester City','Chelsea','PSG','Bayern de Munique','Inter de Milão','Juventus','Al-Hilal','Al-Ahly','Wydad Casablanca','Monterrey','Seattle Sounders','Inter Miami'] },
+  { name: 'Copa do Mundo', country: 'Mundo', teams: [] },
+  { name: 'Copa do Mundo de Clubes FIFA', country: 'Mundo', teams: ['Flamengo','Fluminense','Palmeiras','Botafogo','Real Madrid','Barcelona','Manchester City','Chelsea','PSG','Bayern de Munique','Inter de Milão','Juventus','Al-Hilal','Al-Ahly','Wydad Casablanca','Monterrey','Seattle Sounders','Inter Miami'] },
+  { name: 'Copa Intercontinental FIFA', country: 'Mundo', teams: [] },
+  { name: 'Copa Árabe da FIFA', country: 'Mundo', teams: [] },
+  { name: 'Eliteserien', country: 'Noruega', teams: [] },
+  { name: 'Copa NM', country: 'Noruega', teams: [] },
+  { name: 'Premier League', country: 'País de Gales', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
+  { name: 'Cymru Sul', country: 'País de Gales', teams: [] },
+  { name: 'Cymru Norte', country: 'País de Gales', teams: [] },
+  { name: 'Eredivisie', country: 'Países Baixos', teams: [] },
+  { name: 'Eerste Divisie', country: 'Países Baixos', teams: [] },
+  { name: 'Copa dos Países Baixos', country: 'Países Baixos', teams: [] },
+  { name: 'Copa de Primera', country: 'Paraguai', teams: [] },
+  { name: 'Copa do Paraguai', country: 'Paraguai', teams: [] },
+  { name: 'Liga 1', country: 'Peru', teams: [] },
+  { name: 'Liga Portugal', country: 'Portugal', teams: ['Benfica','Porto','Sporting','Braga','Vitória SC','Boavista','Casa Pia','Estoril','Famalicão','Gil Vicente','Moreirense','Nacional','Rio Ave','Santa Clara','Arouca','Tondela','Alverca','Estrela Amadora'] },
+  { name: 'Taça de Portugal', country: 'Portugal', teams: [] },
+  { name: 'Copa da Liga', country: 'Portugal', teams: [] },
+  { name: 'Supercopa', country: 'Portugal', teams: [] },
+  { name: 'Premier League', country: 'Rússia', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
+  { name: 'Copa da Rússia', country: 'Rússia', teams: [] },
+  { name: 'Allsvenskan', country: 'Suécia', teams: [] },
+  { name: 'Copa da Suécia', country: 'Suécia', teams: [] },
+  { name: 'Superliga', country: 'Suíça', teams: [] },
+  { name: 'Super Lig', country: 'Turquia', teams: [] },
+  { name: 'Copa da Turquia', country: 'Turquia', teams: [] },
+  { name: 'Supercopa', country: 'Turquia', teams: [] },
+  { name: 'Premier League', country: 'Ucrânia', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
+  { name: 'Liga AUF Uruguaia', country: 'Uruguai', teams: [] },
+  { name: 'Copa do Uruguai', country: 'Uruguai', teams: [] },
+  { name: 'Liga FUTVE', country: 'Venezuela', teams: [] },
 ]
 
 const roundOptions = [
@@ -60,43 +173,51 @@ function todayISO(){ return new Date().toISOString().slice(0,10) }
 function uid(){ return Math.random().toString(36).slice(2) + Date.now().toString(36) }
 function norm(v){ return String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim() }
 
+function isBlankRound(value) {
+  const v = norm(value)
+  return !v || v === 'deixar em branco' || v === 'sem rodada/fase' || v === 'sem rodada' || v === 'sem fase'
+}
+
+function displayRound(value) {
+  return isBlankRound(value) ? '' : String(value || '').trim()
+}
+
 function cleanRoundValue(value) {
   const v = norm(value)
-  if (v === 'deixar em branco' || v === 'sem rodada/fase' || v === 'sem rodada' || v === 'sem fase') return ''
+  if (!v || v === 'deixar em branco' || v === 'sem rodada/fase' || v === 'sem rodada' || v === 'sem fase') return 'Deixar em branco'
   return value
 }
 
 function cleanChannelValue(value) {
   const v = norm(value)
-  if (v === 'deixar em branco') return ''
+  if (v === 'deixar em branco') return 'Deixar em branco'
   return value
 }
+
+function displayChannel(value) {
+  const v = norm(value)
+  if (!v || v === 'deixar em branco') return ''
+  return String(value || '').trim()
+}
+
+
+
+
+
 
 
 function countryFlag(country){
   const flags = {
-    'Brasil': '🇧🇷',
-    'América do Sul': '🌎',
-    'Inglaterra': '🏴',
-    'Espanha': '🇪🇸',
-    'Itália': '🇮🇹',
-    'Alemanha': '🇩🇪',
-    'França': '🇫🇷',
-    'Portugal': '🇵🇹',
-    'Europa': '🇪🇺',
-    'Estados Unidos': '🇺🇸',
-    'México': '🇲🇽',
-    'Argentina': '🇦🇷',
-    'Chile': '🇨🇱',
-    'Colômbia': '🇨🇴',
-    'Arábia Saudita': '🇸🇦',
-    'Japão': '🇯🇵',
-    'Coreia do Sul': '🇰🇷',
-    'Ásia': '🌏',
-    'África': '🌍',
-    'FIFA': '🏆'
+    'África': '🌍', 'África do Sul': '🇿🇦', 'Ásia': '🌏', 'Áustria': '🇦🇹', 'Alemanha': '🇩🇪',
+    'América do Norte e Central': '🌎', 'América do Sul': '🌎', 'Arábia Saudita': '🇸🇦', 'Argentina': '🇦🇷',
+    'Bélgica': '🇧🇪', 'Bolívia': '🇧🇴', 'Brasil': '🇧🇷', 'Bulgária': '🇧🇬', 'Chile': '🇨🇱', 'China': '🇨🇳',
+    'Colômbia': '🇨🇴', 'Croácia': '🇭🇷', 'Dinamarca': '🇩🇰', 'Egito': '🇪🇬', 'Equador': '🇪🇨', 'Escócia': '🏴',
+    'Espanha': '🇪🇸', 'EUA': '🇺🇸', 'Estados Unidos': '🇺🇸', 'Europa': '🇪🇺', 'França': '🇫🇷', 'Grécia': '🇬🇷',
+    'Inglaterra': '🏴', 'Irlanda do Norte': '🇬🇧', 'Itália': '🇮🇹', 'Marrocos': '🇲🇦', 'México': '🇲🇽', 'Mundo': '🌐',
+    'Noruega': '🇳🇴', 'País de Gales': '🏴', 'Países Baixos': '🇳🇱', 'Paraguai': '🇵🇾', 'Peru': '🇵🇪', 'Portugal': '🇵🇹',
+    'Rússia': '🇷🇺', 'Suécia': '🇸🇪', 'Suíça': '🇨🇭', 'Turquia': '🇹🇷', 'Ucrânia': '🇺🇦', 'Uruguai': '🇺🇾',
+    'Venezuela': '🇻🇪', 'Japão': '🇯🇵', 'Coreia do Sul': '🇰🇷', 'FIFA': '🏆'
   }
-
   return flags[country] || '🏳️'
 }
 
@@ -110,19 +231,21 @@ function parseCompetitionName(value){
 }
 
 function formatDatePt(dateValue){
-  const date = new Date(`${dateValue}T12:00:00`)
+  const value = dateValue || todayISO()
+  const date = new Date(`${value}T12:00:00`)
+  if (Number.isNaN(date.getTime())) return 'DATA NÃO SELECIONADA'
   return new Intl.DateTimeFormat('pt-BR',{ weekday:'long', day:'2-digit', month:'long', year:'numeric' }).format(date).replace('-feira','').toUpperCase()
 }
 
 function defaultGame(){
-  return { id: uid(), selected: true, time: '19h00', competition: 'Brasileirão Série A', country: 'Brasil', round: '1ª Rodada', home: 'Flamengo', away: 'Palmeiras', oddHome: '2.10', oddDraw: '3.20', oddAway: '3.40', channel: 'Globo/Premiere', status: 'confirmado' }
+  return { id: uid(), selected: true, time: '19h00', competition: 'Brasileirão Betano', country: 'Brasil', round: 'Deixar em branco', home: 'Flamengo', away: 'Palmeiras', oddHome: '2.10', oddDraw: '3.20', oddAway: '3.40', channel: 'Deixar em branco', status: 'confirmado' }
 }
 
 const starterGames = [
-  { ...defaultGame(), id: uid(), time:'16h00', competition:'Conference League', country:'Europa', round:'Semifinal - Ida', home:'Shakhtar Donetsk', away:'Crystal Palace', oddHome:'3.75', oddDraw:'3.50', oddAway:'2.00', channel:'YouTube (CazéTV)' },
-  { ...defaultGame(), id: uid(), time:'19h00', competition:'Libertadores', country:'América do Sul', round:'Grupo C - 3ª R', home:'Bolívar', away:'Fluminense', oddHome:'1.95', oddDraw:'3.50', oddAway:'3.70', channel:'Paramount+' },
-  { ...defaultGame(), id: uid(), time:'19h00', competition:'Sul-Americana', country:'América do Sul', round:'Grupo G - 3ª R', home:'Vasco da Gama', away:'Olimpia', oddHome:'1.85', oddDraw:'3.60', oddAway:'4.00', channel:'Paramount+' },
-  { ...defaultGame(), id: uid(), time:'20h00', competition:'Brasileirão Série A', country:'Brasil', round:'15ª Rodada', home:'Flamengo', away:'Palmeiras', oddHome:'2.10', oddDraw:'3.20', oddAway:'3.40', channel:'Globo/Premiere' },
+  { ...defaultGame(), id: uid(), time:'16h00', competition:'Liga Conferência', country:'Europa', round:'Semifinal - Ida', home:'Shakhtar Donetsk', away:'Crystal Palace', oddHome:'3.75', oddDraw:'3.50', oddAway:'2.00', channel:'YouTube (CazéTV)' },
+  { ...defaultGame(), id: uid(), time:'19h00', competition:'Copa Libertadores', country:'América do Sul', round:'Grupo C - 3ª R', home:'Bolívar', away:'Fluminense', oddHome:'1.95', oddDraw:'3.50', oddAway:'3.70', channel:'Paramount+' },
+  { ...defaultGame(), id: uid(), time:'19h00', competition:'Copa Sul-Americana', country:'América do Sul', round:'Grupo G - 3ª R', home:'Vasco da Gama', away:'Olimpia', oddHome:'1.85', oddDraw:'3.60', oddAway:'4.00', channel:'Paramount+' },
+  { ...defaultGame(), id: uid(), time:'20h00', competition:'Brasileirão Betano', country:'Brasil', round:'15ª Rodada', home:'Flamengo', away:'Palmeiras', oddHome:'2.10', oddDraw:'3.20', oddAway:'3.40', channel:'Globo/Premiere' },
 ]
 
 function useClickOutside(ref, handler){
@@ -134,7 +257,7 @@ function useClickOutside(ref, handler){
   }, [ref, handler])
 }
 
-function SearchSelect({ label, value, options, onChange, placeholder='Pesquisar...', allowCustom=true, disabled=false }){
+function SearchSelect({ label, value, options, onChange, placeholder='Pesquisar...', allowCustom=true, disabled=false, allowBlank=false, blankLabel='Deixar em branco' }){
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const box = useRef(null)
@@ -143,7 +266,7 @@ function SearchSelect({ label, value, options, onChange, placeholder='Pesquisar.
     const q = norm(query)
     return options.filter(opt => !q || norm(opt).includes(q)).slice(0, 90)
   }, [options, query])
-  function choose(v){ onChange(v); setQuery(''); setOpen(false) }
+  function choose(v){ onChange(v === 'Sem rodada/fase' ? '' : v); setQuery(''); setOpen(false) }
   return <div className="field" ref={box}>
     <label>{label}</label>
     <button type="button" className={'selectButton ' + (disabled ? 'disabled':'')} disabled={disabled} onClick={() => setOpen(v => !v)}>
@@ -152,6 +275,7 @@ function SearchSelect({ label, value, options, onChange, placeholder='Pesquisar.
     {open && !disabled && <div className="popover">
       <input autoFocus value={query} onChange={e => setQuery(e.target.value)} placeholder={placeholder} className="searchInput" />
       <div className="optionList">
+        {allowBlank && <button className="option blankOption" type="button" onClick={() => choose('')}>{blankLabel}</button>}
         {allowCustom && query.trim() && <button className="option custom" type="button" onClick={() => choose(query.trim())}>Usar “{query.trim()}”</button>}
         {filtered.map(opt => <button className="option" type="button" key={opt} onClick={() => choose(opt)}>{opt}</button>)}
         {!filtered.length && !query.trim() && <div className="empty">Nenhuma opção</div>}
@@ -164,21 +288,46 @@ function TextInput({ label, value, onChange, placeholder='' }){
   return <div className="field"><label>{label}</label><input className="textInput" value={value} placeholder={placeholder} onChange={e => onChange(e.target.value)} /></div>
 }
 
+function DateInput({ label, value, onChange }){
+  return <div className="field">
+    <label>{label}</label>
+    <input
+      className="textInput dateInput"
+      type="date"
+      value={value || todayISO()}
+      onChange={e => onChange(e.target.value || todayISO())}
+      onClick={e => e.currentTarget.showPicker?.()}
+    />
+  </div>
+}
+
 function CanvasCard({ game }){
-  const channelClass = norm(game.channel).includes('youtube') || norm(game.channel).includes('caze') ? 'blue' : (norm(game.channel).includes('paramount') || norm(game.channel).includes('globo') || norm(game.channel).includes('premiere') || norm(game.channel).includes('disney') ? 'red' : '')
+  const roundText = displayRound(game.round)
+  const channelText = displayChannel(game.channel)
+  const channelFontSize = getChannelFontSize(channelText)
+  const channelPartsList = channelParts(channelText)
+  const multiChannel = channelPartsList.length > 1
+
   return <div className="canvasRow">
     <div className="matchBox">
       <div className="timeCell">{game.time || '--h--'}</div>
       <div className="matchMain">
         <div className="leagueLine">
           <span className="leagueName">{competitionLabel(game)}</span>
-          <span className="roundPill">{game.round || 'Rodada'}</span>
+          {roundText && <span className="roundPill">{roundText}</span>}
         </div>
         <div className="teamsLine"><span>{game.home || 'Mandante'}</span><em>x</em><span>{game.away || 'Visitante'}</span></div>
       </div>
       <div className="oddsCell"><span>{game.oddHome || '—'}</span><span>{game.oddDraw || '—'}</span><span>{game.oddAway || '—'}</span></div>
     </div>
-    <div className={'channelBox ' + channelClass}>{String(game.channel || '').trim()}</div>
+    <div className={`channelBox${multiChannel ? ' multi' : ''}`} style={{ fontSize: `${channelFontSize}px` }}>
+      {channelPartsList.length > 1 ? channelPartsList.map((part, idx) => (
+        <React.Fragment key={`${part}-${idx}`}>
+          <span style={{ color: channelColor(part) }}>{part}</span>
+          {idx < channelPartsList.length - 1 && <span style={{ color: '#1b0b06' }}> e </span>}
+        </React.Fragment>
+      )) : <span style={{ color: channelColor(channelText) }}>{channelText}</span>}
+    </div>
   </div>
 }
 
@@ -241,8 +390,11 @@ function drawLeftText(ctx, text, x, y, maxWidth, font, color) {
   ctx.fillText(fitText(ctx, text, maxWidth), x, y)
 }
 
+
 function channelParts(channel) {
-  return String(channel || '')
+  const clean = displayChannel(channel)
+  if (!clean) return []
+  return clean
     .split(/\s*(?:\/|,|\+| e )\s*/i)
     .map(v => v.trim())
     .filter(Boolean)
@@ -253,58 +405,71 @@ function hasMultipleChannels(channel) {
 }
 
 function getChannelFontSize(channel) {
-  const value = String(channel || '').trim()
+  const value = displayChannel(channel)
   const parts = channelParts(value)
   const len = value.length
-
-  if (parts.length >= 4 || len >= 34) return 15
-  if (parts.length >= 3 || len >= 28) return 17
-  if (parts.length >= 2 || len >= 20) return 19
-  if (len >= 15) return 22
+  if (parts.length >= 4 || len >= 36) return 13
+  if (parts.length >= 3 || len >= 30) return 15
+  if (parts.length >= 2 || len >= 22) return 17
+  if (len >= 16) return 20
   return 25
 }
 
-function wrapTextLines(ctx, text, maxWidth, maxLines = 2) {
-  const words = String(text || '').trim().split(/\s+/).filter(Boolean)
-  if (!words.length) return ['']
+function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
+  const parts = channelParts(channel)
+  if (!parts.length) return
 
+  const fontSize = getChannelFontSize(channel)
+  const lineHeight = fontSize <= 14 ? 15 : fontSize <= 17 ? 18 : 20
+  ctx.font = `900 ${fontSize}px Arial, Helvetica, sans-serif`
+  ctx.textBaseline = 'middle'
+  ctx.textAlign = 'left'
+
+  const maxLines = parts.length >= 3 ? 2 : 1
   const lines = []
-  let current = words[0]
+  let current = []
 
-  for (let i = 1; i < words.length; i += 1) {
-    const test = `${current} ${words[i]}`
-    if (ctx.measureText(test).width <= maxWidth) {
+  for (const part of parts) {
+    const test = [...current, part]
+    const textValue = test.join(' e ')
+    if (!current.length || ctx.measureText(textValue).width <= maxWidth) {
       current = test
     } else {
       lines.push(current)
-      current = words[i]
+      current = [part]
       if (lines.length === maxLines - 1) break
     }
   }
+  if (current.length) lines.push(current)
 
-  const usedWords = lines.join(' ').split(/\s+/).filter(Boolean).length
-  const remaining = words.slice(usedWords)
-  lines.push(remaining.join(' ') || current)
+  const finalLines = lines.slice(0, maxLines)
+  const totalHeight = (finalLines.length - 1) * lineHeight
 
-  const result = lines.slice(0, maxLines)
-  if (result.length === maxLines) result[result.length - 1] = fitText(ctx, result[result.length - 1], maxWidth)
-
-  return result
-}
-
-function drawCenteredMultilineText(ctx, text, x, y, maxWidth, font, color, lineHeight = 20, maxLines = 2) {
-  ctx.font = font
-  ctx.fillStyle = color
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-
-  const lines = wrapTextLines(ctx, text, maxWidth, maxLines)
-  const totalHeight = (lines.length - 1) * lineHeight
-
-  lines.forEach((line, index) => {
-    ctx.fillText(line, x, y - totalHeight / 2 + index * lineHeight)
+  finalLines.forEach((lineParts, lineIndex) => {
+    const yLine = y - totalHeight / 2 + lineIndex * lineHeight
+    const pieces = []
+    lineParts.forEach((part, idx) => {
+      pieces.push({ text: part, color: channelColor(part) })
+      if (idx < lineParts.length - 1) pieces.push({ text: ' e ', color: '#1b0b06' })
+    })
+    const totalWidth = pieces.reduce((sum, piece) => sum + ctx.measureText(piece.text).width, 0)
+    if (totalWidth > maxWidth) {
+      drawCenteredText(ctx, lineParts.join(' e '), x, yLine, maxWidth, `900 ${fontSize}px Arial, Helvetica, sans-serif`, channelColor(lineParts[0]))
+      return
+    }
+    let cursor = x - totalWidth / 2
+    pieces.forEach(piece => {
+      ctx.fillStyle = piece.color
+      ctx.fillText(piece.text, cursor, yLine)
+      cursor += ctx.measureText(piece.text).width
+    })
   })
 }
+
+
+
+
+
 
 function drawBrandPill(ctx, x, y, w, h, colors) {
   const text = 'DICAS93TV'
@@ -319,12 +484,12 @@ function drawBrandPill(ctx, x, y, w, h, colors) {
 
 function channelColor(channel) {
   const v = norm(channel)
-
   const rules = [
     { keys: ['sportv 2'], color: '#b5121b' },
     { keys: ['sportv'], color: '#c91d26' },
     { keys: ['premiere'], color: '#1b0b06' },
     { keys: ['youtube'], color: '#005eb8' },
+    { keys: ['yt'], color: '#005eb8' },
     { keys: ['globo'], color: '#e30613' },
     { keys: ['espn 2'], color: '#8f0014' },
     { keys: ['espn'], color: '#a40017' },
@@ -332,7 +497,7 @@ function channelColor(channel) {
     { keys: ['paramount'], color: '#0077b6' },
     { keys: ['cazetv', 'caze'], color: '#00a6d6' },
     { keys: ['goat'], color: '#d19000' },
-    { keys: ['x sports'], color: '#00a9a5' },
+    { keys: ['x sports', 'xsports'], color: '#00a9a5' },
     { keys: ['band'], color: '#006b4f' },
     { keys: ['record'], color: '#ef6c00' },
     { keys: ['sbt'], color: '#b000b5' },
@@ -347,18 +512,13 @@ function channelColor(channel) {
     { keys: ['tv brasil'], color: '#1f8f3a' },
     { keys: ['sem transmissao', 'a definir'], color: '#1b0b06' },
   ]
-
   let match = null
-
   for (const rule of rules) {
     for (const key of rule.keys) {
       const pos = v.indexOf(key)
-      if (pos >= 0 && (!match || pos < match.pos)) {
-        match = { pos, color: rule.color }
-      }
+      if (pos >= 0 && (!match || pos < match.pos)) match = { pos, color: rule.color }
     }
   }
-
   return match?.color || '#1b0b06'
 }
 
@@ -421,10 +581,13 @@ function downloadProgramPng(date, games, filename) {
     ctx.lineWidth = 1
     ctx.beginPath(); ctx.moveTo(x + timeW, y + 31); ctx.lineTo(x + matchW - oddsW, y + 31); ctx.stroke()
 
-    drawLeftText(ctx, competitionLabel(game), x + timeW + 12, y + 15.5, 285, '900 15px Arial, Helvetica, sans-serif', '#2a1b15')
-    const pillW = Math.min(185, Math.max(80, ctx.measureText(String(game.round || 'Rodada')).width + 26))
-    fillRound(ctx, x + 435, y + 4.5, pillW, 22, 11, '#d7f2ea')
-    drawCenteredText(ctx, game.round || 'Rodada', x + 435 + pillW / 2, y + 15.5, pillW - 14, '900 13px Arial, Helvetica, sans-serif', colors.green)
+    drawLeftText(ctx, competitionLabel(game), x + timeW + 12, y + 15.5, game.round ? 285 : 470, '900 15px Arial, Helvetica, sans-serif', '#2a1b15')
+    const roundText = displayRound(game.round)
+    if (roundText) {
+      const pillW = Math.min(185, Math.max(80, ctx.measureText(roundText).width + 26))
+      fillRound(ctx, x + 435, y + 4.5, pillW, 22, 11, '#d7f2ea')
+      drawCenteredText(ctx, roundText, x + 435 + pillW / 2, y + 15.5, pillW - 14, '900 13px Arial, Helvetica, sans-serif', colors.green)
+    }
 
     const teamsY = y + 31
     const teamsH = rowH - 31
@@ -449,19 +612,7 @@ function downloadProgramPng(date, games, filename) {
     ctx.restore()
 
     fillRound(ctx, channelX, y, channelW, rowH, 14, colors.card, colors.line, 2)
-    const channelText = String(game.channel || '').trim()
-    const channelFontSize = getChannelFontSize(channelText)
-    drawCenteredMultilineText(
-      ctx,
-      channelText,
-      channelX + channelW / 2,
-      y + rowH / 2,
-      channelW - 26,
-      `900 ${channelFontSize}px Arial, Helvetica, sans-serif`,
-      channelColor(channelText),
-      channelFontSize <= 17 ? 18 : 20,
-      hasMultipleChannels(channelText) ? 2 : 1
-    )
+    drawColoredChannelText(ctx, game.channel, channelX + channelW / 2, y + rowH / 2, channelW - 26)
 
     y += rowH + gap
   })
@@ -529,7 +680,7 @@ function App(){
     r.onload = () => {
       const lines = String(r.result).split(/\r?\n/).filter(Boolean); const headers = lines.shift().split(',').map(norm)
       const get=(cols,k)=>cols[headers.indexOf(k)]?.trim() || ''
-      const imported = lines.map(line => { const cols=line.split(','); return { id:uid(), selected:true, time:get(cols,'horario') || '19h00', competition:get(cols,'campeonato') || 'Campeonato', country:get(cols,'pais'), round:get(cols,'rodada') || get(cols,'fase') || 'Rodada', home:get(cols,'mandante') || 'Mandante', away:get(cols,'visitante') || 'Visitante', oddHome:get(cols,'odd_casa') || '—', oddDraw:get(cols,'odd_empate') || '—', oddAway:get(cols,'odd_fora') || '—', channel:cleanChannelValue(get(cols,'canal') || ''), status:get(cols,'status') || 'confirmado' } })
+      const imported = lines.map(line => { const cols=line.split(','); return { id:uid(), selected:true, time:get(cols,'horario') || '19h00', competition:get(cols,'campeonato') || 'Campeonato', country:get(cols,'pais'), round:cleanRoundValue(get(cols,'rodada') || get(cols,'fase') || ''), home:get(cols,'mandante') || 'Mandante', away:get(cols,'visitante') || 'Visitante', oddHome:get(cols,'odd_casa') || '—', oddDraw:get(cols,'odd_empate') || '—', oddAway:get(cols,'odd_fora') || '—', channel:cleanChannelValue(get(cols,'canal') || ''), status:get(cols,'status') || 'confirmado' } })
       setGames(list => [...list, ...imported])
     }
     r.readAsText(file)
@@ -542,16 +693,20 @@ function App(){
       <section className="gridLayout">
         <aside className="panel">
           <div className="sectionTitle">Nova partida</div>
-          <div className="dateRow"><TextInput label="Data da arte" value={date} onChange={setDate}/></div>
+          <div className="dateRow"><DateInput label="Data da arte" value={date} onChange={setDate}/></div>
           <SearchSelect label="Campeonato" value={draft.competition ? `${countryFlag(draft.country)} ${draft.competition}${draft.country ? ' — '+draft.country : ''}` : ''} options={competitionOptions} onChange={v => setDraftField('competition', v)} placeholder="Pesquisar campeonato..." />
-          <div className="twoCols"><SearchSelect label="Horário" value={draft.time} options={timeOptions} onChange={v => setDraftField('time', v)} placeholder="Digite 19..." allowCustom={true}/><SearchSelect label="Rodada/Fase" value={draft.round} options={roundOptions} onChange={v => setDraftField('round', cleanRoundValue(v))} placeholder="Pesquisar rodada..." allowCustom={true}/></div>
+          <div className="twoCols"><SearchSelect label="Horário" value={draft.time} options={timeOptions} onChange={v => setDraftField('time', v)} placeholder="Digite 19..." allowCustom={true}/><SearchSelect label="Rodada/Fase" value={draft.round} options={roundOptions} onChange={v => setDraftField('round', cleanRoundValue(v))} placeholder="Opcional" allowCustom={true} allowBlank={true} blankLabel="Deixar Rodada/Fase em branco"/></div>
           <div className="twoCols"><SearchSelect label="Mandante" value={draft.home} options={teamOptions} onChange={v => setDraftField('home', v)} placeholder="Pesquisar time..." allowCustom={true}/><SearchSelect label="Visitante" value={draft.away} options={teamOptions} onChange={v => setDraftField('away', v)} placeholder="Pesquisar time..." allowCustom={true}/></div>
           <div className="threeCols"><SearchSelect label="Casa" value={draft.oddHome} options={oddsOptions} onChange={v => setDraftField('oddHome', v)} placeholder="Odd"/><SearchSelect label="Empate" value={draft.oddDraw} options={oddsOptions} onChange={v => setDraftField('oddDraw', v)} placeholder="Odd"/><SearchSelect label="Fora" value={draft.oddAway} options={oddsOptions} onChange={v => setDraftField('oddAway', v)} placeholder="Odd"/></div>
-          <SearchSelect label="Transmissão" value={draft.channel} options={channels} onChange={v => setDraftField('channel', cleanChannelValue(v))} placeholder="Digite ou pesquise transmissão..." allowCustom={true}/>
+          <div className="transmissionField">
+            <SearchSelect label="Transmissão" value={draft.channel} options={channels} onChange={v => setDraftField('channel', cleanChannelValue(v))} placeholder="Digite ou pesquise transmissão..." allowCustom={true}/>
+            <SearchSelect label="Adicionar transmissão" value="" options={channels.filter(c => c !== 'Deixar em branco' && c !== 'A definir')} onChange={addTransmissionToDraft} placeholder="+ adicionar outro canal..." allowCustom={true}/>
+            <button type="button" className="secondary transmissionClear" onClick={() => setDraftField('channel', 'Deixar em branco')}>Limpar transmissão</button>
+          </div>
           <div className="actions"><button className="primary" onClick={addOrSave}>{editingId ? 'Salvar alterações' : 'Adicionar jogo'}</button><button className="secondary" onClick={resetDraft}>Limpar campos</button><button className="secondary" onClick={() => setDraft(d => ({...d, oddHome:'—', oddDraw:'—', oddAway:'—'}))}>Sem odds</button></div>
           <div className="sectionTitle lower">Jogos adicionados <span>{selectedCount}/11 na arte</span></div>
           <div className="gameList">{games.map((g, index) => <div className="editCard" key={g.id}>
-            <div className="editMain"><label><input type="checkbox" checked={g.selected} onChange={e => updateGame(g.id,{selected:e.target.checked})}/> mostrar</label><strong>{g.time} · {g.home} x {g.away}</strong><small>{countryFlag(g.country)} {g.competition} · {g.round} · {g.channel}</small></div>
+            <div className="editMain"><label><input type="checkbox" checked={g.selected} onChange={e => updateGame(g.id,{selected:e.target.checked})}/> mostrar</label><strong>{g.time} · {g.home} x {g.away}</strong><small>{countryFlag(g.country)} {g.competition}{displayRound(g.round) ? ` · ${displayRound(g.round)}` : ''}{displayChannel(g.channel) ? ` · ${displayChannel(g.channel)}` : ''}</small></div>
             <div className="miniBtns"><button onClick={() => move(g.id,-1)} disabled={index===0}>↑</button><button onClick={() => move(g.id,1)} disabled={index===games.length-1}>↓</button><button onClick={() => editGame(g)}>Editar</button><button onClick={() => duplicate(g)}>Duplicar</button><button className="danger" onClick={() => removeGame(g.id)}>Excluir</button></div>
           </div>)}</div>
           <div className="fileActions"><label className="secondary file">Importar CSV<input type="file" accept=".csv" onChange={e => e.target.files?.[0] && importCsv(e.target.files[0])}/></label><label className="secondary file">Importar JSON<input type="file" accept=".json" onChange={e => e.target.files?.[0] && importJson(e.target.files[0])}/></label><button className="secondary" onClick={exportJson}>Exportar JSON</button><button className="secondary" onClick={downloadExampleCsv}>CSV exemplo</button></div>
