@@ -394,6 +394,7 @@ function drawLeftText(ctx, text, x, y, maxWidth, font, color) {
 function channelParts(channel) {
   const clean = displayChannel(channel)
   if (!clean) return []
+
   return clean
     .split(/\s*(?:\/|,|\+| e )\s*/i)
     .map(v => v.trim())
@@ -407,11 +408,13 @@ function hasMultipleChannels(channel) {
 function getChannelFontSize(channel) {
   const value = displayChannel(channel)
   const parts = channelParts(value)
-  const len = value.length
-  if (parts.length >= 4 || len >= 38) return 14
-  if (parts.length >= 3 || len >= 31) return 16
-  if (parts.length >= 2 || len >= 24) return 19
-  if (len >= 17) return 21
+  const renderedLen = parts.join(' / ').length
+
+  if (parts.length >= 4 || renderedLen >= 38) return 14
+  if (parts.length >= 3 || renderedLen >= 31) return 16
+  if (parts.length >= 2 || renderedLen >= 24) return 18
+  if (parts.length >= 2) return 20
+  if (renderedLen >= 18) return 21
   return 25
 }
 
@@ -423,8 +426,50 @@ function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
   const lineHeight = fontSize <= 14 ? 15 : fontSize <= 17 ? 18 : 20
   ctx.font = `900 ${fontSize}px Arial, Helvetica, sans-serif`
   ctx.textBaseline = 'middle'
-  ctx.textAlign = 'left'
+  ctx.textAlign = 'center'
 
+  // Uma transmissão só: fica igual à prévia do site.
+  // Exemplo: YouTube (CazéTV) pode quebrar em 2 linhas sem virar "YouTube / CazéTV".
+  if (parts.length === 1) {
+    const original = displayChannel(channel)
+    const preferredBreak = original.replace(/\s*\(/, ' (')
+    const words = preferredBreak.split(/\s+/).filter(Boolean)
+    const lines = []
+
+    let current = words[0] || ''
+    for (let i = 1; i < words.length; i += 1) {
+      const test = `${current} ${words[i]}`
+      if (ctx.measureText(test).width <= maxWidth) {
+        current = test
+      } else {
+        lines.push(current)
+        current = words[i]
+      }
+    }
+    if (current) lines.push(current)
+
+    const finalLines = lines.slice(0, 2)
+    if (finalLines.length > 2) finalLines.length = 2
+
+    // Se ainda ficar muito grande, aí sim reduz um pouco a fonte antes de cortar.
+    let finalFontSize = fontSize
+    while (finalFontSize > 14 && finalLines.some(line => ctx.measureText(line).width > maxWidth)) {
+      finalFontSize -= 1
+      ctx.font = `900 ${finalFontSize}px Arial, Helvetica, sans-serif`
+    }
+
+    const finalLineHeight = finalFontSize <= 15 ? 16 : finalFontSize <= 18 ? 18 : 20
+    const totalHeight = (finalLines.length - 1) * finalLineHeight
+    ctx.fillStyle = channelColor(original)
+
+    finalLines.forEach((line, index) => {
+      ctx.fillText(line, x, y - totalHeight / 2 + index * finalLineHeight)
+    })
+    return
+  }
+
+  // Mais de uma transmissão: separa por barra e mantém cores individuais.
+  ctx.textAlign = 'left'
   const maxLines = parts.length >= 3 ? 2 : 1
   const lines = []
   let current = []
@@ -452,12 +497,10 @@ function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
       pieces.push({ text: part, color: channelColor(part) })
       if (idx < lineParts.length - 1) pieces.push({ text: ' / ', color: '#1b0b06' })
     })
+
     const totalWidth = pieces.reduce((sum, piece) => sum + ctx.measureText(piece.text).width, 0)
-    if (totalWidth > maxWidth) {
-      drawCenteredText(ctx, lineParts.join(' / '), x, yLine, maxWidth, `900 ${fontSize}px Arial, Helvetica, sans-serif`, channelColor(lineParts[0]))
-      return
-    }
     let cursor = x - totalWidth / 2
+
     pieces.forEach(piece => {
       ctx.fillStyle = piece.color
       ctx.fillText(piece.text, cursor, yLine)
