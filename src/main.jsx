@@ -193,11 +193,14 @@ function cleanChannelValue(value) {
   if (v === 'deixar em branco') return 'Deixar em branco'
   const raw = String(value || '').trim()
   if (!raw) return raw
+
   const parts = raw
-    .split(/\s*(?:\/|,|\+| e )\s*/i)
+    .split(/\s*(?:\/|,|\be\b)\s*/i)
     .map(v => v.trim())
     .filter(Boolean)
+
   if (parts.length <= 1) return raw
+
   const unique = []
   const seen = new Set()
   for (const part of parts) {
@@ -409,7 +412,7 @@ function channelParts(channel) {
   if (!clean) return []
 
   return clean
-    .split(/\s*(?:\/|,|\+| e )\s*/i)
+    .split(/\s*(?:\/|,|\be\b)\s*/i)
     .map(v => v.trim())
     .filter(Boolean)
 }
@@ -435,13 +438,14 @@ function getChannelFontSize(channel) {
   const parts = channelParts(value)
   const renderedLen = parts.join(', ').length
 
-  // Visual mais limpo e padronizado para a coluna de transmissão.
-  if (!value) return 14
-  if (parts.length >= 4 || renderedLen >= 36) return 10
-  if (parts.length >= 3 || renderedLen >= 28) return 11
-  if (parts.length >= 2 || renderedLen >= 21) return 12
-  if (renderedLen >= 16) return 13
-  return 14
+  // Escala visual aproximada 80/100 dentro do retângulo:
+  // maior para teste, ainda priorizando encaixe.
+  if (!value) return 17
+  if (parts.length >= 4 || renderedLen >= 38) return 13
+  if (parts.length >= 3 || renderedLen >= 31) return 14
+  if (parts.length >= 2 || renderedLen >= 24) return 15
+  if (renderedLen >= 17) return 16
+  return 17
 }
 
 function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
