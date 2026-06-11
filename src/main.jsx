@@ -324,7 +324,7 @@ function CanvasCard({ game }){
   const roundText = displayRound(game.round)
   const channelText = displayChannel(game.channel)
   const channelFontSize = getChannelFontSize(channelText)
-  const channelTokensList = channelTokens(channelText)
+  const channelLines = getWrappedChannelLines(channelText, 148, channelFontSize, 2)
   const multiChannel = channelParts(channelText).length > 1
 
   return <div className="canvasRow">
@@ -340,16 +340,34 @@ function CanvasCard({ game }){
       <div className="oddsCell"><span>{game.oddHome || '—'}</span><span>{game.oddDraw || '—'}</span><span>{game.oddAway || '—'}</span></div>
     </div>
     <div className={`channelBox${multiChannel ? ' multi' : ''}`} style={{ fontSize: `${channelFontSize}px` }}>
-      {channelTokensList.map((token, idx) => (
-        <span key={`${token.text}-${idx}`} style={{ color: token.type === 'channel' ? channelColor(token.text) : '#1b0b06' }}>{token.text}</span>
+      {channelLines.map((line, lineIdx) => (
+        <div className="channelLine" key={`line-${lineIdx}`}>
+          {line.map((token, idx) => (
+            <span key={`${token.text}-${lineIdx}-${idx}`} style={{ color: token.type === 'channel' ? channelColor(token.text) : '#1b0b06' }}>{token.text}</span>
+          ))}
+        </div>
       ))}
     </div>
   </div>
 }
 
+const MAX_PNG_BLOCKS = 10
+const CANVAS_W = 1080
+const HEADER_BLOCK = 54
+const ROW_HEIGHT = 58
+const ROW_GAP = 6
+const FOOTER_HEIGHT = 46
+const CANVAS_BOTTOM_PADDING = 10
+
+function getCanvasHeight(visibleCount) {
+  const rows = Math.max(visibleCount, 1)
+  return HEADER_BLOCK + rows * ROW_HEIGHT + Math.max(0, rows - 1) * ROW_GAP + FOOTER_HEIGHT + CANVAS_BOTTOM_PADDING
+}
+
 function FeedCanvas({ date, games }){
-  const visible = games.filter(g => g.selected).slice(0, 11)
-  return <div className="feedCanvas">
+  const visible = games.filter(g => g.selected).slice(0, MAX_PNG_BLOCKS)
+  const canvasHeight = getCanvasHeight(visible.length)
+  return <div className="feedCanvas" style={{ height: `${canvasHeight}px` }}>
     <div className="canvasHeader"><div className="dateBadge">{formatDatePt(date)}</div><div className="brandBadge"><span>DICAS93TV</span></div></div>
     <div className="rowsWrap">{visible.map(game => <CanvasCard game={game} key={game.id} />)}</div>
     <div className="canvasFooter"><strong>{BRAND}</strong><span>{INSTAGRAM}</span></div>
@@ -429,6 +447,47 @@ function channelTokens(channel) {
   return tokens
 }
 
+const channelMeasureCanvas = typeof document !== 'undefined' ? document.createElement('canvas') : null
+
+function wrapChannelTokens(tokens, measureText, maxWidth, maxLines = 2) {
+  if (!tokens.length) return []
+
+  const lines = []
+  let current = []
+  let currentWidth = 0
+
+  tokens.forEach(token => {
+    const tokenWidth = measureText(token.text)
+    if (!current.length || currentWidth + tokenWidth <= maxWidth) {
+      current.push(token)
+      currentWidth += tokenWidth
+      return
+    }
+    lines.push(current)
+    current = [token]
+    currentWidth = tokenWidth
+  })
+
+  if (current.length) lines.push(current)
+
+  if (lines.length <= maxLines) return lines
+
+  const trimmed = lines.slice(0, maxLines - 1)
+  const rest = lines.slice(maxLines - 1).flat()
+  trimmed.push(rest)
+  return trimmed
+}
+
+function getWrappedChannelLines(channel, maxWidth, fontSize, maxLines = 2) {
+  const tokens = channelTokens(channel)
+  if (!tokens.length) return []
+  if (!channelMeasureCanvas) return [tokens]
+
+  const ctx = channelMeasureCanvas.getContext('2d')
+  ctx.font = `900 ${fontSize}px Arial, Helvetica, sans-serif`
+  return wrapChannelTokens(tokens, text => ctx.measureText(text).width, maxWidth, maxLines)
+}
+
 function hasMultipleChannels(channel) {
   return channelParts(channel).length > 1
 }
@@ -453,24 +512,32 @@ function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
   if (!tokens.length) return
 
   let fontSize = getChannelFontSize(channel)
+  let lines = []
+
+  while (fontSize > 8) {
+    ctx.font = `900 ${fontSize}px Arial, Helvetica, sans-serif`
+    lines = wrapChannelTokens(tokens, text => ctx.measureText(text).width, maxWidth, 2)
+    if (lines.length <= 2 && lines.every(line => line.reduce((sum, token) => sum + ctx.measureText(token.text).width, 0) <= maxWidth)) break
+    fontSize -= 1
+  }
+
   ctx.font = `900 ${fontSize}px Arial, Helvetica, sans-serif`
   ctx.textBaseline = 'middle'
   ctx.textAlign = 'left'
 
-  const measure = () => tokens.reduce((sum, token) => sum + ctx.measureText(token.text).width, 0)
+  const lineHeight = fontSize <= 10 ? fontSize + 2 : fontSize + 3
+  const totalHeight = (lines.length - 1) * lineHeight
 
-  while (fontSize > 9 && measure() > maxWidth) {
-    fontSize -= 1
-    ctx.font = `900 ${fontSize}px Arial, Helvetica, sans-serif`
-  }
+  lines.forEach((line, lineIdx) => {
+    const lineWidth = line.reduce((sum, token) => sum + ctx.measureText(token.text).width, 0)
+    let cursor = x - lineWidth / 2
+    const yLine = y - totalHeight / 2 + lineIdx * lineHeight
 
-  const totalWidth = measure()
-  let cursor = x - totalWidth / 2
-
-  tokens.forEach(token => {
-    ctx.fillStyle = token.type === 'channel' ? channelColor(token.text) : '#1b0b06'
-    ctx.fillText(token.text, cursor, y)
-    cursor += ctx.measureText(token.text).width
+    line.forEach(token => {
+      ctx.fillStyle = token.type === 'channel' ? channelColor(token.text) : '#1b0b06'
+      ctx.fillText(token.text, cursor, yLine)
+      cursor += ctx.measureText(token.text).width
+    })
   })
 }
 
@@ -482,7 +549,7 @@ function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
 function drawBrandPill(ctx, x, y, w, h, colors) {
   const text = 'DICAS93TV'
   ctx.textBaseline = 'middle'
-  ctx.font = '900 30px Arial, Helvetica, sans-serif'
+  ctx.font = '900 18px Arial, Helvetica, sans-serif'
   const textW = ctx.measureText(text).width
   const startX = x + (w - textW) / 2
   ctx.textAlign = 'left'
@@ -531,8 +598,9 @@ function channelColor(channel) {
 }
 
 function downloadProgramPng(date, games, filename) {
-  const W = 1080
-  const H = 1350
+  const W = CANVAS_W
+  const visible = games.filter(g => g.selected).slice(0, MAX_PNG_BLOCKS)
+  const H = getCanvasHeight(visible.length)
   const canvas = document.createElement('canvas')
   canvas.width = W
   canvas.height = H
@@ -555,84 +623,83 @@ function downloadProgramPng(date, games, filename) {
   ctx.fillStyle = colors.cream
   ctx.fillRect(0, 0, W, H)
 
-  fillRound(ctx, 28, 26, 735, 62, 15, colors.green)
-  drawLeftText(ctx, formatDatePt(date), 46, 57, 695, '900 31px Arial, Helvetica, sans-serif', '#ffffff')
+  fillRound(ctx, 10, 10, 878, 34, 8, colors.green)
+  drawLeftText(ctx, formatDatePt(date), 18, 27, 850, '900 18px Arial, Helvetica, sans-serif', '#ffffff')
 
-  fillRound(ctx, 785, 26, 267, 62, 15, colors.dark)
-  drawBrandPill(ctx, 785, 26, 267, 62, colors)
+  fillRound(ctx, 898, 10, 172, 34, 8, colors.dark)
+  drawBrandPill(ctx, 898, 10, 172, 34, colors)
 
-  const visible = games.filter(g => g.selected).slice(0, 11)
-  let y = 106
-  const rowH = 92
-  const gap = 13
+  let y = 54
+  const rowH = 58
+  const gap = 6
 
   visible.forEach((game) => {
-    const x = 28
-    const matchW = 778
-    const channelX = 820
-    const channelW = 232
-    const timeW = 126
-    const oddsW = 66
+    const x = 10
+    const matchW = 883
+    const channelX = 901
+    const channelW = 169
+    const timeW = 74
+    const oddsW = 48
 
-    fillRound(ctx, x, y, matchW, rowH, 14, colors.card, colors.line, 2)
+    fillRound(ctx, x, y, matchW, rowH, 8, colors.card, colors.line, 2)
     ctx.save()
-    drawRoundRect(ctx, x, y, matchW, rowH, 14)
+    drawRoundRect(ctx, x, y, matchW, rowH, 8)
     ctx.clip()
 
     ctx.fillStyle = colors.green
     ctx.fillRect(x, y, timeW, rowH)
-    drawCenteredText(ctx, game.time || '--h--', x + timeW / 2, y + rowH / 2, timeW - 10, '900 29px Arial, Helvetica, sans-serif', '#ffffff')
+    drawCenteredText(ctx, game.time || '--h--', x + timeW / 2, y + rowH / 2, timeW - 8, '900 18px Arial, Helvetica, sans-serif', '#ffffff')
 
     ctx.fillStyle = colors.pale
-    ctx.fillRect(x + timeW, y, matchW - timeW - oddsW, 31)
+    ctx.fillRect(x + timeW, y, matchW - timeW - oddsW, 19)
     ctx.strokeStyle = '#dfd6ca'
     ctx.lineWidth = 1
-    ctx.beginPath(); ctx.moveTo(x + timeW, y + 31); ctx.lineTo(x + matchW - oddsW, y + 31); ctx.stroke()
+    ctx.beginPath(); ctx.moveTo(x + timeW, y + 19); ctx.lineTo(x + matchW - oddsW, y + 19); ctx.stroke()
 
-    drawLeftText(ctx, competitionLabel(game), x + timeW + 12, y + 15.5, game.round ? 285 : 470, '900 15px Arial, Helvetica, sans-serif', '#2a1b15')
+    drawLeftText(ctx, competitionLabel(game), x + timeW + 8, y + 10, game.round ? 330 : 520, '900 9px Arial, Helvetica, sans-serif', '#2a1b15')
     const roundText = displayRound(game.round)
     if (roundText) {
       const pillW = Math.min(185, Math.max(80, ctx.measureText(roundText).width + 26))
-      fillRound(ctx, x + 435, y + 4.5, pillW, 22, 11, '#d7f2ea')
-      drawCenteredText(ctx, roundText, x + 435 + pillW / 2, y + 15.5, pillW - 14, '900 13px Arial, Helvetica, sans-serif', colors.green)
+      fillRound(ctx, x + 360, y + 2.5, pillW, 14, 7, '#d7f2ea')
+      drawCenteredText(ctx, roundText, x + 360 + pillW / 2, y + 9.5, pillW - 10, '900 8px Arial, Helvetica, sans-serif', colors.green)
     }
 
-    const teamsY = y + 31
+    const teamsY = y + 19
     const teamsH = rowH - 31
     const contentX = x + timeW
     const contentW = matchW - timeW - oddsW
     const midCX = contentX + contentW / 2
     const leftCX = contentX + contentW * 0.25
     const rightCX = contentX + contentW * 0.75
-    drawCenteredText(ctx, game.home || 'Mandante', leftCX, teamsY + teamsH / 2, contentW * 0.43, '900 29px Arial, Helvetica, sans-serif', '#160b07')
-    drawCenteredText(ctx, 'x', midCX, teamsY + teamsH / 2, 28, '900 22px Arial, Helvetica, sans-serif', '#6d6258')
-    drawCenteredText(ctx, game.away || 'Visitante', rightCX, teamsY + teamsH / 2, contentW * 0.43, '900 29px Arial, Helvetica, sans-serif', '#160b07')
+    drawCenteredText(ctx, game.home || 'Mandante', leftCX, teamsY + teamsH / 2, contentW * 0.43, '900 16px Arial, Helvetica, sans-serif', '#160b07')
+    drawCenteredText(ctx, 'x', midCX, teamsY + teamsH / 2, 18, '900 12px Arial, Helvetica, sans-serif', '#6d6258')
+    drawCenteredText(ctx, game.away || 'Visitante', rightCX, teamsY + teamsH / 2, contentW * 0.43, '900 16px Arial, Helvetica, sans-serif', '#160b07')
 
     ctx.fillStyle = '#fff8db'
     ctx.fillRect(x + matchW - oddsW, y, oddsW, rowH)
     ctx.strokeStyle = '#d8d0c6'
     ctx.beginPath(); ctx.moveTo(x + matchW - oddsW, y); ctx.lineTo(x + matchW - oddsW, y + rowH); ctx.stroke()
     ;[game.oddHome || '—', game.oddDraw || '—', game.oddAway || '—'].forEach((odd, idx) => {
-      const oy = y + 13 + idx * 27
-      fillRound(ctx, x + matchW - oddsW + 6, oy, 54, 24, 12, colors.yellow)
-      drawCenteredText(ctx, odd, x + matchW - oddsW + 33, oy + 12, 48, '900 17px Arial, Helvetica, sans-serif', colors.dark)
+      const oy = y + 8 + idx * 17
+      fillRound(ctx, x + matchW - oddsW + 5, oy, 38, 14, 7, colors.yellow)
+      drawCenteredText(ctx, odd, x + matchW - oddsW + 24, oy + 7, 34, '900 9px Arial, Helvetica, sans-serif', colors.dark)
     })
     ctx.restore()
 
-    fillRound(ctx, channelX, y, channelW, rowH, 14, colors.card, colors.line, 2)
-    drawColoredChannelText(ctx, game.channel, channelX + channelW / 2, y + rowH / 2, channelW - 26)
+    fillRound(ctx, channelX, y, channelW, rowH, 8, colors.card, colors.line, 2)
+    drawColoredChannelText(ctx, game.channel, channelX + channelW / 2, y + rowH / 2, channelW - 10)
 
     y += rowH + gap
   })
 
   ctx.fillStyle = colors.dark
-  ctx.fillRect(0, H - 62, W, 62)
-  drawLeftText(ctx, BRAND, 32, H - 31, 480, '900 33px Arial, Helvetica, sans-serif', '#ffffff')
+  ctx.fillRect(0, H - 46, W, 46)
+  drawLeftText(ctx, BRAND, 12, H - 23, 300, '900 18px Arial, Helvetica, sans-serif', '#ffffff')
   ctx.textAlign = 'right'
   ctx.textBaseline = 'middle'
-  ctx.font = '900 30px Arial, Helvetica, sans-serif'
+  ctx.font = '900 18px Arial, Helvetica, sans-serif'
   ctx.fillStyle = colors.yellow
-  ctx.fillText(INSTAGRAM, W - 32, H - 31)
+  ctx.fillText(INSTAGRAM, W - 12, H - 23)
 
   const a = document.createElement('a')
   a.download = filename
@@ -652,6 +719,8 @@ function App(){
   const teamOptions = selectedCompetition?.teams || []
   const competitionOptions = competitions.map(c => `${countryFlag(c.country)} ${c.name} — ${c.country}`)
   const selectedCount = games.filter(g => g.selected).length
+  const previewCount = Math.min(selectedCount, MAX_PNG_BLOCKS)
+  const previewHeight = getCanvasHeight(previewCount)
 
   function setDraftField(key, value){
     setDraft(prev => {
@@ -733,10 +802,10 @@ function App(){
           </div>)}</div>
           <div className="fileActions"><label className="secondary file">Importar CSV<input type="file" accept=".csv" onChange={e => e.target.files?.[0] && importCsv(e.target.files[0])}/></label><label className="secondary file">Importar JSON<input type="file" accept=".json" onChange={e => e.target.files?.[0] && importJson(e.target.files[0])}/></label><button className="secondary" onClick={exportJson}>Exportar JSON</button><button className="secondary" onClick={downloadExampleCsv}>CSV exemplo</button></div>
         </aside>
-        <section className="previewSide"><div className="previewToolbar"><strong>Prévia da arte</strong><span>Exportação real: 1080 x 1350 px</span></div><div className="previewFrame"><div className="previewScale"><FeedCanvas date={date} games={games}/></div></div></section>
+        <section className="previewSide"><div className="previewToolbar"><strong>Prévia da arte</strong><span>Máximo de 10 blocos por PNG</span></div><div className="previewFrame"><div className="previewScale" style={{ height: `${previewHeight}px` }}><FeedCanvas date={date} games={games}/></div></div></section>
       </section>
     </main>
-    <div className="exportMount" aria-hidden="true"><div ref={exportRef}><FeedCanvas date={date} games={games}/></div></div>
+    <div className="exportMount" style={{ height: `${previewHeight}px` }} aria-hidden="true"><div ref={exportRef}><FeedCanvas date={date} games={games}/></div></div>
   </>
 }
 
