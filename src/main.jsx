@@ -324,7 +324,7 @@ function CanvasCard({ game }){
   const roundText = displayRound(game.round)
   const channelText = displayChannel(game.channel)
   const channelFontSize = getChannelFontSize(channelText)
-  const channelLines = getWrappedChannelLines(channelText, 148, channelFontSize, 2)
+  const channelLines = getWrappedChannelLines(channelText, 205, channelFontSize, 4)
   const multiChannel = channelParts(channelText).length > 1
 
   return <div className="canvasRow">
@@ -354,7 +354,7 @@ function CanvasCard({ game }){
 const MAX_PNG_BLOCKS = 10
 const CANVAS_W = 1080
 const HEADER_BLOCK = 54
-const ROW_HEIGHT = 58
+const ROW_HEIGHT = 86
 const ROW_GAP = 6
 const FOOTER_HEIGHT = 46
 const CANVAS_BOTTOM_PADDING = 10
@@ -449,26 +449,34 @@ function channelTokens(channel) {
 
 const channelMeasureCanvas = typeof document !== 'undefined' ? document.createElement('canvas') : null
 
-function wrapChannelTokens(tokens, measureText, maxWidth, maxLines = 2) {
+function wrapChannelTokens(tokens, measureText, maxWidth, maxLines = 4) {
   if (!tokens.length) return []
 
+  const groups = []
+  for (let i = 0; i < tokens.length; ) {
+    const current = [tokens[i]]
+    if (i + 1 < tokens.length && tokens[i + 1].type === 'sep') current.push(tokens[i + 1])
+    groups.push(current)
+    i += current.length
+  }
+
   const lines = []
-  let current = []
+  let currentLine = []
   let currentWidth = 0
 
-  tokens.forEach(token => {
-    const tokenWidth = measureText(token.text)
-    if (!current.length || currentWidth + tokenWidth <= maxWidth) {
-      current.push(token)
-      currentWidth += tokenWidth
+  groups.forEach(group => {
+    const groupWidth = group.reduce((sum, token) => sum + measureText(token.text), 0)
+    if (!currentLine.length || currentWidth + groupWidth <= maxWidth) {
+      currentLine.push(...group)
+      currentWidth += groupWidth
       return
     }
-    lines.push(current)
-    current = [token]
-    currentWidth = tokenWidth
+    lines.push(currentLine)
+    currentLine = [...group]
+    currentWidth = groupWidth
   })
 
-  if (current.length) lines.push(current)
+  if (currentLine.length) lines.push(currentLine)
 
   if (lines.length <= maxLines) return lines
 
@@ -478,7 +486,7 @@ function wrapChannelTokens(tokens, measureText, maxWidth, maxLines = 2) {
   return trimmed
 }
 
-function getWrappedChannelLines(channel, maxWidth, fontSize, maxLines = 2) {
+function getWrappedChannelLines(channel, maxWidth, fontSize, maxLines = 4) {
   const tokens = channelTokens(channel)
   if (!tokens.length) return []
   if (!channelMeasureCanvas) return [tokens]
@@ -514,10 +522,10 @@ function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
   let fontSize = getChannelFontSize(channel)
   let lines = []
 
-  while (fontSize > 8) {
+  while (fontSize > 7) {
     ctx.font = `900 ${fontSize}px Arial, Helvetica, sans-serif`
-    lines = wrapChannelTokens(tokens, text => ctx.measureText(text).width, maxWidth, 2)
-    if (lines.length <= 2 && lines.every(line => line.reduce((sum, token) => sum + ctx.measureText(token.text).width, 0) <= maxWidth)) break
+    lines = wrapChannelTokens(tokens, text => ctx.measureText(text).width, maxWidth, 4)
+    if (lines.length <= 4 && lines.every(line => line.reduce((sum, token) => sum + ctx.measureText(token.text).width, 0) <= maxWidth)) break
     fontSize -= 1
   }
 
@@ -525,7 +533,7 @@ function drawColoredChannelText(ctx, channel, x, y, maxWidth) {
   ctx.textBaseline = 'middle'
   ctx.textAlign = 'left'
 
-  const lineHeight = fontSize <= 10 ? fontSize + 2 : fontSize + 3
+  const lineHeight = fontSize <= 9 ? fontSize + 1 : fontSize + 2
   const totalHeight = (lines.length - 1) * lineHeight
 
   lines.forEach((line, lineIdx) => {
@@ -630,14 +638,14 @@ function downloadProgramPng(date, games, filename) {
   drawBrandPill(ctx, 898, 10, 172, 34, colors)
 
   let y = 54
-  const rowH = 58
+  const rowH = 86
   const gap = 6
 
   visible.forEach((game) => {
     const x = 10
-    const matchW = 883
-    const channelX = 901
-    const channelW = 169
+    const matchW = 825
+    const channelX = 845
+    const channelW = 225
     const timeW = 74
     const oddsW = 48
 
@@ -651,21 +659,21 @@ function downloadProgramPng(date, games, filename) {
     drawCenteredText(ctx, game.time || '--h--', x + timeW / 2, y + rowH / 2, timeW - 8, '900 18px Arial, Helvetica, sans-serif', '#ffffff')
 
     ctx.fillStyle = colors.pale
-    ctx.fillRect(x + timeW, y, matchW - timeW - oddsW, 19)
+    ctx.fillRect(x + timeW, y, matchW - timeW - oddsW, 21)
     ctx.strokeStyle = '#dfd6ca'
     ctx.lineWidth = 1
-    ctx.beginPath(); ctx.moveTo(x + timeW, y + 19); ctx.lineTo(x + matchW - oddsW, y + 19); ctx.stroke()
+    ctx.beginPath(); ctx.moveTo(x + timeW, y + 21); ctx.lineTo(x + matchW - oddsW, y + 21); ctx.stroke()
 
-    drawLeftText(ctx, competitionLabel(game), x + timeW + 8, y + 10, game.round ? 330 : 520, '900 9px Arial, Helvetica, sans-serif', '#2a1b15')
+    drawLeftText(ctx, competitionLabel(game), x + timeW + 8, y + 11, game.round ? 290 : 470, '900 9px Arial, Helvetica, sans-serif', '#2a1b15')
     const roundText = displayRound(game.round)
     if (roundText) {
       const pillW = Math.min(185, Math.max(80, ctx.measureText(roundText).width + 26))
-      fillRound(ctx, x + 360, y + 2.5, pillW, 14, 7, '#d7f2ea')
-      drawCenteredText(ctx, roundText, x + 360 + pillW / 2, y + 9.5, pillW - 10, '900 8px Arial, Helvetica, sans-serif', colors.green)
+      fillRound(ctx, x + 315, y + 3.5, pillW, 14, 7, '#d7f2ea')
+      drawCenteredText(ctx, roundText, x + 315 + pillW / 2, y + 10.5, pillW - 10, '900 8px Arial, Helvetica, sans-serif', colors.green)
     }
 
-    const teamsY = y + 19
-    const teamsH = rowH - 31
+    const teamsY = y + 21
+    const teamsH = rowH - 21
     const contentX = x + timeW
     const contentW = matchW - timeW - oddsW
     const midCX = contentX + contentW / 2
@@ -680,14 +688,14 @@ function downloadProgramPng(date, games, filename) {
     ctx.strokeStyle = '#d8d0c6'
     ctx.beginPath(); ctx.moveTo(x + matchW - oddsW, y); ctx.lineTo(x + matchW - oddsW, y + rowH); ctx.stroke()
     ;[game.oddHome || '—', game.oddDraw || '—', game.oddAway || '—'].forEach((odd, idx) => {
-      const oy = y + 8 + idx * 17
-      fillRound(ctx, x + matchW - oddsW + 5, oy, 38, 14, 7, colors.yellow)
-      drawCenteredText(ctx, odd, x + matchW - oddsW + 24, oy + 7, 34, '900 9px Arial, Helvetica, sans-serif', colors.dark)
+      const oy = y + 9 + idx * 24
+      fillRound(ctx, x + matchW - oddsW + 5, oy, 38, 16, 8, colors.yellow)
+      drawCenteredText(ctx, odd, x + matchW - oddsW + 24, oy + 8, 34, '900 9px Arial, Helvetica, sans-serif', colors.dark)
     })
     ctx.restore()
 
     fillRound(ctx, channelX, y, channelW, rowH, 8, colors.card, colors.line, 2)
-    drawColoredChannelText(ctx, game.channel, channelX + channelW / 2, y + rowH / 2, channelW - 10)
+    drawColoredChannelText(ctx, game.channel, channelX + channelW / 2, y + rowH / 2, channelW - 18)
 
     y += rowH + gap
   })
