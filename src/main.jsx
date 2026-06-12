@@ -321,25 +321,23 @@ function DateInput({ label, value, onChange }){
 }
 
 function CanvasCard({ game }){
-  const isPlaceholder = !!game.isPlaceholder
-  const roundText = isPlaceholder ? '' : displayRound(game.round)
-  const competitionText = isPlaceholder ? '' : competitionLabel(game)
-  const channelText = isPlaceholder ? '' : displayChannel(game.channel)
+  const roundText = displayRound(game.round)
+  const channelText = displayChannel(game.channel)
   const channelFontSize = getChannelFontSize(channelText)
   const channelLines = getWrappedChannelLines(channelText, 205, channelFontSize, 4)
   const multiChannel = channelParts(channelText).length > 1
 
   return <div className="canvasRow">
     <div className="matchBox">
-      <div className="timeCell">{isPlaceholder ? '' : (game.time || '--h--')}</div>
+      <div className="timeCell">{game.time || '--h--'}</div>
       <div className="matchMain">
         <div className="leagueLine">
-          <span className="leagueName">{competitionText}</span>
+          <span className="leagueName">{competitionLabel(game)}</span>
           {roundText && <span className="roundPill">{roundText}</span>}
         </div>
-        <div className="teamsLine"><span>{isPlaceholder ? '' : (game.home || 'Mandante')}</span><em>x</em><span>{isPlaceholder ? '' : (game.away || 'Visitante')}</span></div>
+        <div className="teamsLine"><span>{game.home || 'Mandante'}</span><em>x</em><span>{game.away || 'Visitante'}</span></div>
       </div>
-      <div className="oddsCell"><span>{isPlaceholder ? '' : (game.oddHome || '—')}</span><span>{isPlaceholder ? '' : (game.oddDraw || '—')}</span><span>{isPlaceholder ? '' : (game.oddAway || '—')}</span></div>
+      <div className="oddsCell"><span>{game.oddHome || '—'}</span><span>{game.oddDraw || '—'}</span><span>{game.oddAway || '—'}</span></div>
     </div>
     <div className={`channelBox${multiChannel ? ' multi' : ''}`} style={{ fontSize: `${channelFontSize}px` }}>
       {channelLines.map((line, lineIdx) => (
@@ -361,37 +359,13 @@ const ROW_GAP = 6
 const FOOTER_HEIGHT = 46
 const CANVAS_BOTTOM_PADDING = 10
 
-function createPlaceholderGame(index) {
-  return {
-    id: `placeholder-${index}`,
-    selected: false,
-    isPlaceholder: true,
-    time: '',
-    competition: '',
-    round: '',
-    home: '',
-    away: '',
-    oddHome: '',
-    oddDraw: '',
-    oddAway: '',
-    channel: ''
-  }
-}
-
-function buildVisibleRows(games) {
-  const visible = games.filter(g => g.selected).slice(0, MAX_PNG_BLOCKS)
-  const missing = Math.max(0, MAX_PNG_BLOCKS - visible.length)
-  const placeholders = Array.from({ length: missing }, (_, index) => createPlaceholderGame(index + 1))
-  return [...visible, ...placeholders]
-}
-
 function getCanvasHeight() {
   const rows = MAX_PNG_BLOCKS
   return HEADER_BLOCK + rows * ROW_HEIGHT + Math.max(0, rows - 1) * ROW_GAP + FOOTER_HEIGHT + CANVAS_BOTTOM_PADDING
 }
 
 function FeedCanvas({ date, games }){
-  const visibleRows = buildVisibleRows(games)
+  const visibleRows = games.filter(g => g.selected).slice(0, MAX_PNG_BLOCKS)
   const canvasHeight = getCanvasHeight()
   return <div className="feedCanvas" style={{ height: `${canvasHeight}px` }}>
     <div className="canvasHeader"><div className="dateBadge">{formatDatePt(date)}</div><div className="brandBadge"><span>DICAS93TV</span></div></div>
@@ -633,7 +607,7 @@ function channelColor(channel) {
 
 function downloadProgramPng(date, games, filename) {
   const W = CANVAS_W
-  const visible = buildVisibleRows(games)
+  const visible = games.filter(g => g.selected).slice(0, MAX_PNG_BLOCKS)
   const H = getCanvasHeight()
   const canvas = document.createElement('canvas')
   canvas.width = W
@@ -682,7 +656,7 @@ function downloadProgramPng(date, games, filename) {
 
     ctx.fillStyle = colors.green
     ctx.fillRect(x, y, timeW, rowH)
-    drawCenteredText(ctx, game.isPlaceholder ? '' : (game.time || '--h--'), x + timeW / 2, y + rowH / 2, timeW - 8, '900 18px Arial, Helvetica, sans-serif', '#ffffff')
+    drawCenteredText(ctx, game.time || '--h--', x + timeW / 2, y + rowH / 2, timeW - 8, '900 18px Arial, Helvetica, sans-serif', '#ffffff')
 
     ctx.fillStyle = colors.pale
     ctx.fillRect(x + timeW, y, matchW - timeW - oddsW, 21)
@@ -690,8 +664,8 @@ function downloadProgramPng(date, games, filename) {
     ctx.lineWidth = 1
     ctx.beginPath(); ctx.moveTo(x + timeW, y + 21); ctx.lineTo(x + matchW - oddsW, y + 21); ctx.stroke()
 
-    drawLeftText(ctx, game.isPlaceholder ? '' : competitionLabel(game), x + timeW + 8, y + 11, game.round ? 290 : 470, '900 9px Arial, Helvetica, sans-serif', '#2a1b15')
-    const roundText = game.isPlaceholder ? '' : displayRound(game.round)
+    drawLeftText(ctx, competitionLabel(game), x + timeW + 8, y + 11, game.round ? 290 : 470, '900 9px Arial, Helvetica, sans-serif', '#2a1b15')
+    const roundText = displayRound(game.round)
     if (roundText) {
       const pillW = Math.min(185, Math.max(80, ctx.measureText(roundText).width + 26))
       fillRound(ctx, x + 315, y + 3.5, pillW, 14, 7, '#d7f2ea')
@@ -705,15 +679,15 @@ function downloadProgramPng(date, games, filename) {
     const midCX = contentX + contentW / 2
     const leftCX = contentX + contentW * 0.25
     const rightCX = contentX + contentW * 0.75
-    drawCenteredText(ctx, game.isPlaceholder ? '' : (game.home || 'Mandante'), leftCX, teamsY + teamsH / 2, contentW * 0.43, '900 16px Arial, Helvetica, sans-serif', '#160b07')
+    drawCenteredText(ctx, game.home || 'Mandante', leftCX, teamsY + teamsH / 2, contentW * 0.43, '900 16px Arial, Helvetica, sans-serif', '#160b07')
     drawCenteredText(ctx, 'x', midCX, teamsY + teamsH / 2, 18, '900 12px Arial, Helvetica, sans-serif', '#6d6258')
-    drawCenteredText(ctx, game.isPlaceholder ? '' : (game.away || 'Visitante'), rightCX, teamsY + teamsH / 2, contentW * 0.43, '900 16px Arial, Helvetica, sans-serif', '#160b07')
+    drawCenteredText(ctx, game.away || 'Visitante', rightCX, teamsY + teamsH / 2, contentW * 0.43, '900 16px Arial, Helvetica, sans-serif', '#160b07')
 
     ctx.fillStyle = '#fff8db'
     ctx.fillRect(x + matchW - oddsW, y, oddsW, rowH)
     ctx.strokeStyle = '#d8d0c6'
     ctx.beginPath(); ctx.moveTo(x + matchW - oddsW, y); ctx.lineTo(x + matchW - oddsW, y + rowH); ctx.stroke()
-    ;[(game.isPlaceholder ? '' : (game.oddHome || '—')), (game.isPlaceholder ? '' : (game.oddDraw || '—')), (game.isPlaceholder ? '' : (game.oddAway || '—'))].forEach((odd, idx) => {
+    ;[game.oddHome || '—', game.oddDraw || '—', game.oddAway || '—'].forEach((odd, idx) => {
       const oy = y + 9 + idx * 24
       fillRound(ctx, x + matchW - oddsW + 5, oy, 38, 16, 8, colors.yellow)
       drawCenteredText(ctx, odd, x + matchW - oddsW + 24, oy + 8, 34, '900 9px Arial, Helvetica, sans-serif', colors.dark)
