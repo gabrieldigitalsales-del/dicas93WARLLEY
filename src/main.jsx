@@ -165,7 +165,7 @@ const roundOptions = [
   'Grupo E - 1ª R','Grupo F - 1ª R','Grupo G - 1ª R','Grupo H - 1ª R'
 ]
 
-const channels = ['Deixar em branco','Sem transmissão','Globo','SporTV','SporTV 2','Premiere','ESPN','ESPN 2','Disney+','Paramount+','YouTube','YouTube (CazéTV)','CazéTV','GOAT','X Sports','Band','Record','SBT','Prime Video','DAZN','TNT Sports','SportyNet','Amazon Prime','Apple TV','HBO Max','Max','Canal UOL','Nosso Futebol','TV Brasil','A definir']
+const channels = ['Deixar em branco','Sem transmissão','Globo','SporTV','SporTV 2','Premiere','ESPN','ESPN 2','Disney+','Paramount+','YouTube','YT (CazéTV)','GOAT','XSports','Band','Record','SBT','Prime Video','DAZN','TNT Sports','YT SportyNet','Amazon Prime','Apple TV','HBO Max','Max','Canal UOL','Nosso Futebol','TV Brasil','Globoplay(GE TV)','NSport']
 const timeOptions = Array.from({ length: 24 * 12 }, (_, i) => `${String(Math.floor(i / 12)).padStart(2, '0')}h${String((i % 12) * 5).padStart(2, '0')}`)
 const oddsOptions = ['—', ...Array.from({ length: Math.round((15 - 1.1) / 0.05) + 1 }, (_, i) => (1.1 + i * 0.05).toFixed(2))]
 
