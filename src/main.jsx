@@ -5,150 +5,41 @@ import './styles.css'
 const BRAND = 'DICAS93TV'
 const INSTAGRAM = '@dicas93tv'
 
-const competitions = [
-  { name: 'Copa das Nações Africanas', country: 'África', teams: [] },
-  { name: 'Liga dos Campeões da CAF', country: 'África', teams: ['Al Ahly','Zamalek','Wydad Casablanca','Raja Casablanca','Esperance Tunis','Mamelodi Sundowns','TP Mazembe','Simba SC','Young Africans','CR Belouizdad','Orlando Pirates','Pyramids FC'] },
-  { name: 'Taça das Confederações da CAF', country: 'África', teams: [] },
-  { name: 'Copa da COSAFA', country: 'África', teams: [] },
-  { name: 'Premiership', country: 'África do Sul', teams: [] },
-  { name: 'Liga dos Campeões da AFC', country: 'Ásia', teams: ['Al-Hilal','Al-Nassr','Al-Ittihad','Al-Ahli','Urawa Reds','Vissel Kobe','Yokohama F. Marinos','Ulsan HD','Jeonbuk Hyundai','Shanghai Port','Al-Ain','Al-Sadd','Persepolis','Esteghlal'] },
-  { name: 'Bundesliga', country: 'Áustria', teams: ['Bayern de Munique','Borussia Dortmund','Bayer Leverkusen','RB Leipzig','Eintracht Frankfurt','Stuttgart','Wolfsburg','Freiburg','Mainz','Augsburg','Werder Bremen','Borussia Mönchengladbach','Union Berlin','Hoffenheim','Heidenheim','St. Pauli','Hamburgo','Colônia'] },
-  { name: 'Bundesliga', country: 'Alemanha', teams: ['Bayern de Munique','Borussia Dortmund','Bayer Leverkusen','RB Leipzig','Eintracht Frankfurt','Stuttgart','Wolfsburg','Freiburg','Mainz','Augsburg','Werder Bremen','Borussia Mönchengladbach','Union Berlin','Hoffenheim','Heidenheim','St. Pauli','Hamburgo','Colônia'] },
-  { name: 'Copa da Alemanha', country: 'Alemanha', teams: [] },
-  { name: 'Supercopa', country: 'Alemanha', teams: [] },
-  { name: 'Copa Ouro', country: 'América do Norte e Central', teams: [] },
-  { name: 'Liga das Nações da CONCACAF', country: 'América do Norte e Central', teams: [] },
-  { name: 'Copa das Ligas', country: 'América do Norte e Central', teams: [] },
-  { name: 'Copa América', country: 'América do Sul', teams: [] },
+const competitions = [  { name: 'Liga dos Campeões da CAF', country: 'África', teams: ['Al-Ahly','Zamalek','Wydad Casablanca','Raja Casablanca','Esperance Tunis','Mamelodi Sundowns','TP Mazembe','Simba SC','Young Africans','CR Belouizdad','Orlando Pirates','Pyramids FC'] },
+  { name: 'Liga dos Campeões da AFC', country: 'Ásia', teams: ['Al-Hilal','Al-Nassr','Al-Ittihad','Al-Ahli','Urawa Reds','Vissel Kobe','Yokohama F. Marinos','Ulsan Hyundai','Jeonbuk Hyundai Motors','Shanghai Port','Al-Ain','Al-Sadd','Persepolis','Esteghlal'] },
+  { name: 'Bundesliga', country: 'Áustria', teams: ['Bayern München','Borussia Dortmund','Bayer Leverkusen','RB Leipzig','Eintracht Frankfurt','Stuttgart','Wolfsburg','Freiburg','Mainz','Augsburg','Werder Bremen','Borussia Mönchengladbach','Union Berlin','Hoffenheim','Heidenheim','St. Pauli','Hamburgo','Colônia'] },
+  { name: 'Bundesliga', country: 'Alemanha', teams: ['Bayern München','Borussia Dortmund','Bayer Leverkusen','RB Leipzig','Eintracht Frankfurt','Stuttgart','Wolfsburg','Freiburg','Mainz','Augsburg','Werder Bremen','Borussia Mönchengladbach','Union Berlin','Hoffenheim','Heidenheim','St. Pauli','Hamburgo','Colônia'] },
   { name: 'Copa Libertadores', country: 'América do Sul', teams: ['Flamengo','Palmeiras','São Paulo','Botafogo','River Plate','Boca Juniors','Racing','Estudiantes','Peñarol','Nacional','Colo-Colo','Universidad de Chile','Bolívar','The Strongest','Olimpia','Cerro Porteño','Atlético Nacional','Independiente del Valle','LDU Quito','Barcelona SC'] },
   { name: 'Copa Sul-Americana', country: 'América do Sul', teams: ['Vasco da Gama','Cruzeiro','Corinthians','Bahia','Lanús','Defensa y Justicia','San Lorenzo','Independiente','Universidad Católica','Colo-Colo','Olimpia','Cerro Porteño','LDU Quito','Barcelona SC','Deportivo Cali','Atlético Nacional','Blooming','Carabobo','Melgar','Sporting Cristal'] },
-  { name: 'Recopa Sul-Americana', country: 'América do Sul', teams: [] },
-  { name: 'Copa América Feminina', country: 'América do Sul', teams: [] },
-  { name: 'Brasil Ladies Cup', country: 'América do Sul', teams: [] },
   { name: 'Liga Profissional Saudita', country: 'Arábia Saudita', teams: ['Al-Hilal','Al-Nassr','Al-Ittihad','Al-Ahli','Al-Shabab','Al-Ettifaq','Al-Taawoun','Al-Fateh','Al-Riyadh','Al-Qadsiah','Al-Wehda','Al-Khaleej'] },
-  { name: 'Divisão 1', country: 'Arábia Saudita', teams: [] },
-  { name: 'Copa do Rei', country: 'Arábia Saudita', teams: [] },
-  { name: 'Supercopa', country: 'Arábia Saudita', teams: [] },
-  { name: 'Liga Profesional', country: 'Argentina', teams: [] },
-  { name: 'Copa Argentina', country: 'Argentina', teams: [] },
-  { name: 'Supercopa', country: 'Argentina', teams: [] },
-  { name: 'Supercopa Internacional', country: 'Argentina', teams: [] },
-  { name: 'Liga Jupiler', country: 'Bélgica', teams: [] },
-  { name: 'Copa da Bélgica', country: 'Bélgica', teams: [] },
-  { name: 'División Profesional', country: 'Bolívia', teams: [] },
   { name: 'Brasileirão Betano', country: 'Brasil', teams: ['Flamengo','Palmeiras','Corinthians','São Paulo','Santos','Vasco da Gama','Botafogo','Fluminense','Cruzeiro','Atlético-MG','Grêmio','Internacional','Bahia','Fortaleza','Ceará','Sport','Vitória','Mirassol','Bragantino','Juventude'] },
   { name: 'Brasileirão Série B', country: 'Brasil', teams: ['Athletico-PR','Coritiba','Goiás','Vila Nova','Avaí','Chapecoense','Criciúma','Cuiabá','Remo','Paysandu','CRB','CSA','Novorizontino','Operário','América-MG','Atlético-GO','Botafogo-SP','Ferroviária','Volta Redonda','Amazonas'] },
   { name: 'Série C', country: 'Brasil', teams: ['Náutico','Paysandu','Remo','Figueirense','Londrina','São Bernardo','Botafogo-PB','CSA','Confiança','Ypiranga-RS','ABC','Volta Redonda'] },
   { name: 'Série D', country: 'Brasil', teams: ['Retrô','Portuguesa-RJ','Treze','Manaus','Maringá','Itabaiana','Brasiliense','Anápolis','Cianorte','Inter de Limeira'] },
-  { name: 'Baiano', country: 'Brasil', teams: [] },
   { name: 'Carioca Superbet', country: 'Brasil', teams: ['Flamengo','Fluminense','Vasco da Gama','Botafogo','Boavista','Madureira','Volta Redonda','Portuguesa-RJ','Bangu','Nova Iguaçu'] },
-  { name: 'Catarinense', country: 'Brasil', teams: [] },
-  { name: 'Cearense Superbet', country: 'Brasil', teams: [] },
   { name: 'Gauchão Superbet', country: 'Brasil', teams: ['Grêmio','Internacional','Juventude','Brasil de Pelotas','Caxias','São José-RS','Novo Hamburgo','Ypiranga-RS'] },
-  { name: 'Goiano', country: 'Brasil', teams: [] },
-  { name: 'Matogrossense', country: 'Brasil', teams: [] },
   { name: 'Mineiro', country: 'Brasil', teams: ['Atlético-MG','Cruzeiro','América-MG','Tombense','Villa Nova-MG','Democrata-GV','Athletic Club','Pouso Alegre'] },
-  { name: 'Mineiro 2', country: 'Brasil', teams: [] },
-  { name: 'Mineiro 3', country: 'Brasil', teams: [] },
-  { name: 'Paranaense', country: 'Brasil', teams: [] },
   { name: 'Paulista', country: 'Brasil', teams: ['Corinthians','Palmeiras','São Paulo','Santos','Bragantino','Ponte Preta','Guarani','Mirassol','Ituano','Ferroviária','São Bernardo FC','Novorizontino'] },
-  { name: 'Pernambucano', country: 'Brasil', teams: [] },
   { name: 'Copa Betano do Brasil', country: 'Brasil', teams: ['Flamengo','Palmeiras','Corinthians','São Paulo','Santos','Vasco da Gama','Botafogo','Fluminense','Cruzeiro','Atlético-MG','Grêmio','Internacional','Bahia','Fortaleza','Athletico-PR','Coritiba','Sport','Ceará','Vitória','Juventude'] },
-  { name: 'Copa do Brasil Sub-20', country: 'Brasil', teams: [] },
-  { name: 'Copa Norte', country: 'Brasil', teams: [] },
-  { name: 'Taça Sul-Sudeste', country: 'Brasil', teams: [] },
-  { name: 'Copa Verde', country: 'Brasil', teams: [] },
-  { name: 'Copa do Nordeste Superbet', country: 'Brasil', teams: [] },
-  { name: 'Supercopa do Brasil', country: 'Brasil', teams: [] },
-  { name: 'Recopa Gaúcha', country: 'Brasil', teams: [] },
-  { name: 'Brasileirão Sub-23', country: 'Brasil', teams: [] },
-  { name: 'Brasileirão Sub-20', country: 'Brasil', teams: [] },
-  { name: 'Copinha', country: 'Brasil', teams: [] },
-  { name: 'Brasileirão Feminino', country: 'Brasil', teams: [] },
-  { name: 'Paulista Feminino', country: 'Brasil', teams: [] },
-  { name: 'Copa do Brasil Women', country: 'Brasil', teams: [] },
-  { name: 'Parva Liga', country: 'Bulgária', teams: [] },
-  { name: 'Liga de Primera', country: 'Chile', teams: [] },
-  { name: 'Superliga', country: 'China', teams: [] },
-  { name: 'Primeira A', country: 'Colômbia', teams: [] },
-  { name: 'Copa da Colômbia', country: 'Colômbia', teams: [] },
-  { name: 'HNL', country: 'Croácia', teams: [] },
-  { name: 'Copa da Croácia', country: 'Croácia', teams: [] },
-  { name: 'Superliga', country: 'Dinamarca', teams: [] },
-  { name: '1ª Divisão', country: 'Dinamarca', teams: [] },
   { name: 'Premier League', country: 'Egito', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
-  { name: 'Copa do Egito', country: 'Egito', teams: [] },
-  { name: 'Copa da Liga', country: 'Egito', teams: [] },
-  { name: 'Liga Pro', country: 'Equador', teams: [] },
-  { name: 'Copa do Equador', country: 'Equador', teams: [] },
-  { name: 'Premiership', country: 'Escócia', teams: [] },
-  { name: 'Copa da Escócia', country: 'Escócia', teams: [] },
-  { name: 'Copa da Liga', country: 'Escócia', teams: [] },
   { name: 'LaLiga', country: 'Espanha', teams: ['Real Madrid','Barcelona','Atlético de Madrid','Athletic Club','Real Sociedad','Villarreal','Valencia','Sevilla','Betis','Celta de Vigo','Osasuna','Getafe','Mallorca','Girona','Espanyol','Alavés','Rayo Vallecano','Levante','Elche','Oviedo'] },
   { name: 'LaLiga2', country: 'Espanha', teams: ['Valladolid','Eibar','Leganés','Sporting Gijón','Zaragoza','Levante','Racing Santander','Tenerife','Burgos','Almería'] },
-  { name: 'Copa do Rei', country: 'Espanha', teams: [] },
-  { name: 'Supercopa', country: 'Espanha', teams: [] },
-  { name: 'Supercopa Feminina', country: 'Espanha', teams: [] },
   { name: 'MLS', country: 'EUA', teams: ['Inter Miami','LA Galaxy','Los Angeles FC','New York City FC','New York Red Bulls','Atlanta United','Orlando City','Columbus Crew','Seattle Sounders','Portland Timbers','Chicago Fire','FC Dallas','Austin FC','Nashville SC','Toronto FC','Vancouver Whitecaps'] },
-  { name: 'Copa dos Estados Unidos', country: 'EUA', teams: [] },
-  { name: 'Liga dos Campeões', country: 'Europa', teams: ['Real Madrid','Barcelona','Atlético de Madrid','Arsenal','Chelsea','Liverpool','Manchester City','PSG','Bayern de Munique','Borussia Dortmund','Inter de Milão','Milan','Juventus','Napoli','Benfica','Porto','Sporting','Ajax','PSV','Celtic'] },
+  { name: 'Liga dos Campeões', country: 'Europa', teams: ['Real Madrid','Barcelona','Atlético de Madrid','Arsenal','Chelsea','Liverpool','Manchester City','PSG','Bayern München','Borussia Dortmund','Inter de Milão','Milan','Juventus','Napoli','Benfica','Porto','Sporting','Ajax','PSV','Celtic'] },
   { name: 'Liga Europa', country: 'Europa', teams: ['Manchester United','Tottenham','Roma','Lazio','Milan','Porto','Benfica','Sporting','Ajax','PSV','Fenerbahçe','Galatasaray','Olympiacos','Rangers','Celtic','Sevilla','Betis','Lyon','Marseille','Frankfurt'] },
   { name: 'Liga Conferência', country: 'Europa', teams: ['Chelsea','Crystal Palace','Fiorentina','Betis','Lille','Nice','Copenhagen','Gent','AZ Alkmaar','Rapid Wien','Legia Warszawa','Partizan','Hearts','Molde','Djurgården','Shakhtar Donetsk'] },
-  { name: 'Liga das Nações da UEFA', country: 'Europa', teams: [] },
-  { name: 'Supercopa da UEFA', country: 'Europa', teams: [] },
-  { name: 'Liga dos Campeões - Feminina', country: 'Europa', teams: [] },
-  { name: 'Eurocopa Feminina', country: 'Europa', teams: [] },
-  { name: 'Liga das Nações da UEFA - Feminina', country: 'Europa', teams: [] },
   { name: 'Ligue 1', country: 'França', teams: ['PSG','Marseille','Lyon','Monaco','Lille','Nice','Rennes','Lens','Strasbourg','Nantes','Toulouse','Montpellier','Brest','Auxerre','Angers','Le Havre','Metz','Paris FC'] },
-  { name: 'Copa da França', country: 'França', teams: [] },
-  { name: 'Supercopa', country: 'França', teams: [] },
-  { name: 'Superliga', country: 'Grécia', teams: [] },
-  { name: 'Copa da Grécia', country: 'Grécia', teams: [] },
-  { name: 'Supercopa', country: 'Grécia', teams: [] },
   { name: 'Premier League', country: 'Inglaterra', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
   { name: 'Championship', country: 'Inglaterra', teams: ['Leicester City','Southampton','Ipswich Town','Norwich City','West Brom','Middlesbrough','Watford','Hull City','Swansea City','Stoke City'] },
-  { name: 'Copa da Inglaterra', country: 'Inglaterra', teams: [] },
-  { name: 'Copa da Liga Inglesa', country: 'Inglaterra', teams: [] },
-  { name: 'Premiership', country: 'Irlanda do Norte', teams: [] },
   { name: 'Championship', country: 'Irlanda do Norte', teams: ['Leicester City','Southampton','Ipswich Town','Norwich City','West Brom','Middlesbrough','Watford','Hull City','Swansea City','Stoke City'] },
   { name: 'Serie A', country: 'Itália', teams: ['Inter de Milão','Milan','Juventus','Napoli','Roma','Lazio','Atalanta','Fiorentina','Bologna','Torino','Genoa','Udinese','Sassuolo','Parma','Cagliari','Lecce','Verona','Como','Cremonese','Pisa'] },
   { name: 'Serie B', country: 'Itália', teams: ['Palermo','Sampdoria','Bari','Parma','Venezia','Cremonese','Pisa','Brescia','Modena','Catanzaro'] },
-  { name: 'Copa da Itália', country: 'Itália', teams: [] },
-  { name: 'Supercopa', country: 'Itália', teams: [] },
-  { name: 'Botola Pro', country: 'Marrocos', teams: [] },
   { name: 'Liga MX', country: 'México', teams: ['América','Chivas','Cruz Azul','Pumas','Tigres','Monterrey','Toluca','Pachuca','León','Santos Laguna','Atlas','Tijuana','Necaxa','Puebla','Querétaro','Juárez','Mazatlán','Atlético San Luis'] },
-  { name: 'Copa do Mundo', country: 'Mundo', teams: [] },
-  { name: 'Copa do Mundo de Clubes FIFA', country: 'Mundo', teams: ['Flamengo','Fluminense','Palmeiras','Botafogo','Real Madrid','Barcelona','Manchester City','Chelsea','PSG','Bayern de Munique','Inter de Milão','Juventus','Al-Hilal','Al-Ahly','Wydad Casablanca','Monterrey','Seattle Sounders','Inter Miami'] },
-  { name: 'Copa Intercontinental FIFA', country: 'Mundo', teams: [] },
-  { name: 'Copa Árabe da FIFA', country: 'Mundo', teams: [] },
-  { name: 'Eliteserien', country: 'Noruega', teams: [] },
-  { name: 'Copa NM', country: 'Noruega', teams: [] },
+  { name: 'Copa do Mundo', country: 'Mundo', teams: ['México','África do Sul','Coreia do Sul','Tchéquia','Canadá','Bósnia e Herzegovina','Catar','Suíça','Brasil','Marrocos','Haiti','Escócia','Estados Unidos','Paraguai','Austrália','Turquia','Alemanha','Curaçao','Costa do Marfim','Equador','Holanda','Japão','Suécia','Tunísia','Bélgica','Egito','Irã','Nova Zelândia','Espanha','Cabo Verde','Arábia Saudita','Uruguai','França','Senegal','Iraque','Noruega','Argentina','Argélia','Áustria','Jordânia','Portugal','RD Congo','Uzbequistão','Colômbia','Inglaterra','Croácia','Gana','Panamá'] },
   { name: 'Premier League', country: 'País de Gales', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
-  { name: 'Cymru Sul', country: 'País de Gales', teams: [] },
-  { name: 'Cymru Norte', country: 'País de Gales', teams: [] },
-  { name: 'Eredivisie', country: 'Países Baixos', teams: [] },
-  { name: 'Eerste Divisie', country: 'Países Baixos', teams: [] },
-  { name: 'Copa dos Países Baixos', country: 'Países Baixos', teams: [] },
-  { name: 'Copa de Primera', country: 'Paraguai', teams: [] },
-  { name: 'Copa do Paraguai', country: 'Paraguai', teams: [] },
-  { name: 'Liga 1', country: 'Peru', teams: [] },
   { name: 'Liga Portugal', country: 'Portugal', teams: ['Benfica','Porto','Sporting','Braga','Vitória SC','Boavista','Casa Pia','Estoril','Famalicão','Gil Vicente','Moreirense','Nacional','Rio Ave','Santa Clara','Arouca','Tondela','Alverca','Estrela Amadora'] },
-  { name: 'Taça de Portugal', country: 'Portugal', teams: [] },
-  { name: 'Copa da Liga', country: 'Portugal', teams: [] },
-  { name: 'Supercopa', country: 'Portugal', teams: [] },
   { name: 'Premier League', country: 'Rússia', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
-  { name: 'Copa da Rússia', country: 'Rússia', teams: [] },
-  { name: 'Allsvenskan', country: 'Suécia', teams: [] },
-  { name: 'Copa da Suécia', country: 'Suécia', teams: [] },
-  { name: 'Superliga', country: 'Suíça', teams: [] },
-  { name: 'Super Lig', country: 'Turquia', teams: [] },
-  { name: 'Copa da Turquia', country: 'Turquia', teams: [] },
-  { name: 'Supercopa', country: 'Turquia', teams: [] },
-  { name: 'Premier League', country: 'Ucrânia', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },
-  { name: 'Liga AUF Uruguaia', country: 'Uruguai', teams: [] },
-  { name: 'Copa do Uruguai', country: 'Uruguai', teams: [] },
-  { name: 'Liga FUTVE', country: 'Venezuela', teams: [] },
-]
+  { name: 'Premier League', country: 'Ucrânia', teams: ['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Crystal Palace','Everton','Fulham','Liverpool','Manchester City','Manchester United','Newcastle','Nottingham Forest','Tottenham','West Ham','Wolves','Leeds United','Burnley','Sunderland'] },]
 
 const roundOptions = [
   'Deixar em branco',
@@ -165,7 +56,8 @@ const roundOptions = [
   'Grupo E - 1ª R','Grupo F - 1ª R','Grupo G - 1ª R','Grupo H - 1ª R'
 ]
 
-const channels = ['Deixar em branco','Sem transmissão','Globo','SporTV','SporTV 2','Premiere','ESPN','ESPN 2','Disney+','Paramount+','YouTube','YouTube (CazéTV)','CazéTV','GOAT','X Sports','Band','Record','SBT','Prime Video','DAZN','TNT Sports','SportyNet','Amazon Prime','Apple TV','HBO Max','Max','Canal UOL','Nosso Futebol','TV Brasil','A definir']
+const channels = ['Deixar em branco','Sem transmissão','A definir','Globo','SporTV','SporTV 2','Premiere','ESPN','ESPN 2','ESPN 3','ESPN 4','Disney+','Paramount+','YouTube','YouTube (CazéTV)','YT (CazéTV)','CazéTV','SportyNet','YT SportyNet','NSports','GOAT','YouTube (GOAT)','Xports','Band','Record','SBT','Prime Video','DAZN','TNT Sports','Apple TV','Max','Canal UOL','Nosso Futebol','TV Brasil','FIFA+','CONMEBOL TV','CBF TV','FPF TV','Paulistão Play','UOL Play','OneFootball','Pluto TV','Twitch','Facebook','Fox Sports','Telemundo','Univision','TUDN','beIN Sports','Sky Sports','BBC','ITV','Viaplay','Canal+','Movistar+','Movistar LaLiga','Movistar Liga de Campeões','LaLiga TV','Sport TV','Eleven Sports','RTP','SIC','TVI','Rai Sport','Mediaset','ARD','ZDF','Optus Sport']
+const globalTeamOptions = ['Flamengo','Palmeiras','Corinthians','São Paulo','Santos','Vasco da Gama','Botafogo','Fluminense','Cruzeiro','Atlético-MG','Grêmio','Internacional','Bahia','Fortaleza','Ceará','Sport','Vitória','Athletico-PR','Coritiba','Goiás','Bragantino','Juventude','Mirassol','América-MG','Atlético-GO','Remo','Paysandu','CRB','CSA','Náutico','Santa Cruz','Real Madrid','Barcelona','Atlético de Madrid','Athletic Club','Real Sociedad','Villarreal','Valencia','Sevilla','Betis','Girona','Manchester City','Manchester United','Liverpool','Arsenal','Chelsea','Tottenham','Newcastle','Aston Villa','Everton','West Ham','Leeds United','Bayern München','Borussia Dortmund','Bayer Leverkusen','RB Leipzig','Eintracht Frankfurt','Stuttgart','Wolfsburg','Paris Saint-Germain','Marseille','Lyon','Monaco','Lille','Nice','Rennes','Inter de Milão','Milan','Juventus','Napoli','Roma','Lazio','Atalanta','Fiorentina','Bologna','Torino','Benfica','Porto','Sporting','Braga','Vitória SC','Ajax','PSV','Feyenoord','Celtic','Rangers','River Plate','Boca Juniors','Racing','Independiente','San Lorenzo','Estudiantes','Peñarol','Nacional','Colo-Colo','Universidad de Chile','Olimpia','Cerro Porteño','Libertad','LDU Quito','Barcelona SC','Independiente del Valle','Atlético Nacional','Millonarios','América','Chivas','Cruz Azul','Pumas','Tigres','Monterrey','Toluca','Pachuca','León','Inter Miami','LA Galaxy','Los Angeles FC','New York City FC','Seattle Sounders','Atlanta United','Al-Hilal','Al-Nassr','Al-Ittihad','Al-Ahli','Al-Ain','Al-Sadd','Urawa Reds','Vissel Kobe','Yokohama F. Marinos','Ulsan Hyundai','Jeonbuk Hyundai Motors Motors','Al-Ahly','Zamalek','Wydad Casablanca','Raja Casablanca','Esperance Tunis','Mamelodi Sundowns','Pyramids FC','Brasil','Argentina','Uruguai','Colômbia','Chile','Paraguai','México','Estados Unidos','Canadá','Inglaterra','França','Espanha','Portugal','Alemanha','Itália','Holanda','Bélgica','Croácia','Marrocos','Japão','Coreia do Sul','Austrália','Egito','Senegal','Gana']
 const timeOptions = Array.from({ length: 24 * 12 }, (_, i) => `${String(Math.floor(i / 12)).padStart(2, '0')}h${String((i % 12) * 5).padStart(2, '0')}`)
 const oddsOptions = ['—', ...Array.from({ length: Math.round((15 - 1.1) / 0.05) + 1 }, (_, i) => (1.1 + i * 0.05).toFixed(2))]
 
@@ -571,28 +463,43 @@ function channelColor(channel) {
     { keys: ['sportv 2'], color: '#b5121b' },
     { keys: ['sportv'], color: '#c91d26' },
     { keys: ['premiere'], color: '#1b0b06' },
-    { keys: ['youtube'], color: '#005eb8' },
-    { keys: ['yt'], color: '#005eb8' },
+    { keys: ['youtube', 'yt'], color: '#005eb8' },
     { keys: ['globo'], color: '#e30613' },
+    { keys: ['espn 4'], color: '#7d0012' },
+    { keys: ['espn 3'], color: '#850014' },
     { keys: ['espn 2'], color: '#8f0014' },
     { keys: ['espn'], color: '#a40017' },
     { keys: ['disney'], color: '#4b2bbf' },
     { keys: ['paramount'], color: '#0077b6' },
     { keys: ['cazetv', 'caze'], color: '#00a6d6' },
+    { keys: ['sportynet'], color: '#008f68' },
+    { keys: ['nsports'], color: '#f58220' },
     { keys: ['goat'], color: '#d19000' },
-    { keys: ['x sports', 'xsports'], color: '#00a9a5' },
+    { keys: ['xports'], color: '#00a9a5' },
     { keys: ['band'], color: '#006b4f' },
     { keys: ['record'], color: '#ef6c00' },
     { keys: ['sbt'], color: '#b000b5' },
-    { keys: ['prime video', 'amazon prime'], color: '#0073ce' },
+    { keys: ['prime video'], color: '#0073ce' },
     { keys: ['dazn'], color: '#1b0b06' },
     { keys: ['tnt'], color: '#552583' },
-    { keys: ['sportynet'], color: '#008f68' },
     { keys: ['apple tv', 'apple'], color: '#111111' },
-    { keys: ['hbo max', 'max'], color: '#5f2eea' },
+    { keys: ['max'], color: '#5f2eea' },
     { keys: ['canal uol', 'uol'], color: '#f58220' },
     { keys: ['nosso futebol'], color: '#00843d' },
     { keys: ['tv brasil'], color: '#1f8f3a' },
+    { keys: ['fifa', 'cbf'], color: '#173b79' },
+    { keys: ['conmebol'], color: '#003b73' },
+    { keys: ['paulistao', 'fpf'], color: '#006b4f' },
+    { keys: ['onefootball'], color: '#00a000' },
+    { keys: ['pluto'], color: '#ff4b00' },
+    { keys: ['twitch'], color: '#6441a5' },
+    { keys: ['fox'], color: '#0033a0' },
+    { keys: ['telemundo'], color: '#e31b23' },
+    { keys: ['univision', 'tudn'], color: '#00a3e0' },
+    { keys: ['bein'], color: '#8a1538' },
+    { keys: ['sky sports'], color: '#005eb8' },
+    { keys: ['bbc', 'itv'], color: '#111111' },
+    { keys: ['sport tv'], color: '#f2b705' },
     { keys: ['sem transmissao', 'a definir'], color: '#1b0b06' },
   ]
   let match = null
@@ -664,12 +571,12 @@ function downloadProgramPng(date, games, filename) {
     ctx.lineWidth = 1
     ctx.beginPath(); ctx.moveTo(x + timeW, y + 21); ctx.lineTo(x + matchW - oddsW, y + 21); ctx.stroke()
 
-    drawLeftText(ctx, competitionLabel(game), x + timeW + 8, y + 11, game.round ? 290 : 470, '900 9px Arial, Helvetica, sans-serif', '#2a1b15')
+    drawLeftText(ctx, competitionLabel(game), x + timeW + 8, y + 11.5, game.round ? 300 : 500, '900 14px Arial, Helvetica, sans-serif', '#2a1b15')
     const roundText = displayRound(game.round)
     if (roundText) {
       const pillW = Math.min(185, Math.max(80, ctx.measureText(roundText).width + 26))
-      fillRound(ctx, x + 315, y + 3.5, pillW, 14, 7, '#d7f2ea')
-      drawCenteredText(ctx, roundText, x + 315 + pillW / 2, y + 10.5, pillW - 10, '900 8px Arial, Helvetica, sans-serif', colors.green)
+      fillRound(ctx, x + 330, y + 1.5, pillW, 18, 9, '#d7f2ea')
+      drawCenteredText(ctx, roundText, x + 330 + pillW / 2, y + 10.5, pillW - 10, '900 13px Arial, Helvetica, sans-serif', colors.green)
     }
 
     const teamsY = y + 21
@@ -689,8 +596,8 @@ function downloadProgramPng(date, games, filename) {
     ctx.beginPath(); ctx.moveTo(x + matchW - oddsW, y); ctx.lineTo(x + matchW - oddsW, y + rowH); ctx.stroke()
     ;[game.oddHome || '—', game.oddDraw || '—', game.oddAway || '—'].forEach((odd, idx) => {
       const oy = y + 9 + idx * 24
-      fillRound(ctx, x + matchW - oddsW + 5, oy, 38, 16, 8, colors.yellow)
-      drawCenteredText(ctx, odd, x + matchW - oddsW + 24, oy + 8, 34, '900 9px Arial, Helvetica, sans-serif', colors.dark)
+      fillRound(ctx, x + matchW - oddsW + 3, oy, 42, 20, 10, colors.yellow)
+      drawCenteredText(ctx, odd, x + matchW - oddsW + 24, oy + 10, 38, '900 14px Arial, Helvetica, sans-serif', colors.dark)
     })
     ctx.restore()
 
@@ -737,7 +644,7 @@ function App(){
         const comp = competitions.find(c => c.name === compName) || competitions.find(c => c.name === value)
         next.competition = comp?.name || compName || value
         next.country = comp?.country || ''
-        if (comp?.teams?.length) { next.home = comp.teams[0]; next.away = comp.teams[1] || comp.teams[0] }
+        if (comp?.teams?.length) { next.home = comp.teams[0]; next.away = comp.teams[1] || comp.teams[0] } else { next.home = ''; next.away = '' }
       }
       return next
     })

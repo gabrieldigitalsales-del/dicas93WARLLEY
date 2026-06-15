@@ -1,0 +1,31 @@
+CANAIS ADICIONADOS PELO ÚLTIMO PEDIDO DO USUÁRIO:
+- YouTube (CazéTV)
+- SportyNet
+- NSports
+- ESPN 3
+- ESPN 4
+- YT (CazéTV)
+- YT SportyNet
+
+CORREÇÕES FEITAS:
+- X Sports → Xports
+- YouTube (Cazé TV) → YouTube (CazéTV)
+- Amazon Prime → Prime Video
+- HBO Max → Max
+- Facebook Watch → Facebook
+- Star+ removido/evitado para não duplicar com Disney+
+- M+ Liga de Campeones → Movistar Liga de Campeões
+- ESPN Brasil/ESPN Extra removidos para evitar duplicidade com ESPN/ESPN 2
+
+OBSERVAÇÃO:
+- Não existe uma lista estática realmente completa de todos os times e todas as transmissões do mundo, porque isso muda o tempo todo.
+- O sistema continua permitindo digitar manualmente qualquer time ou canal que não estiver na lista.
+
+NOVA CORREÇÃO - TIMES POR CAMPEONATO:
+- A lista de Mandante e Visitante agora mostra somente os times do campeonato selecionado.
+- Exemplo: ao escolher Brasileirão Série B, aparecem apenas os times da Série B cadastrados no sistema.
+- Se algum campeonato ainda estiver sem lista interna de times, o campo fica vazio, mas ainda permite digitar manualmente.
+
+NOVA CORREÇÃO - CAMPEONATOS SEM TIMES:
+- Foram removidos 106 campeonatos que estavam sem times cadastrados.
+- Agora a lista de campeonatos mostra apenas competições que possuem times/seleções cadastrados.
