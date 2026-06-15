@@ -165,7 +165,7 @@ const roundOptions = [
   'Grupo E - 1ª R','Grupo F - 1ª R','Grupo G - 1ª R','Grupo H - 1ª R'
 ]
 
-const channels = ['Deixar em branco','Sem transmissão','Globo','SporTV','SporTV 2','Premiere','ESPN','ESPN 2','Disney+','Paramount+','YouTube','YT (CazéTV)','GOAT','XSports','Band','Record','SBT','Prime Video','DAZN','TNT Sports','YT SportyNet','YouTube (Cazé TV)','SportyNet','Amazon Prime','Apple TV','HBO Max','Max','Canal UOL','Nosso Futebol','TV Brasil','Globoplay(GE TV)','NSports']
+const channels = ['Deixar em branco','Sem transmissão','Globo','SporTV','SporTV 2','Premiere','ESPN','ESPN 2','Disney+','Paramount+','YouTube','YouTube (CazéTV)','CazéTV','GOAT','X Sports','Band','Record','SBT','Prime Video','DAZN','TNT Sports','SportyNet','Amazon Prime','Apple TV','HBO Max','Max','Canal UOL','Nosso Futebol','TV Brasil','A definir']
 const timeOptions = Array.from({ length: 24 * 12 }, (_, i) => `${String(Math.floor(i / 12)).padStart(2, '0')}h${String((i % 12) * 5).padStart(2, '0')}`)
 const oddsOptions = ['—', ...Array.from({ length: Math.round((15 - 1.1) / 0.05) + 1 }, (_, i) => (1.1 + i * 0.05).toFixed(2))]
 
@@ -679,9 +679,9 @@ function downloadProgramPng(date, games, filename) {
     const midCX = contentX + contentW / 2
     const leftCX = contentX + contentW * 0.25
     const rightCX = contentX + contentW * 0.75
-    drawCenteredText(ctx, game.home || 'Mandante', leftCX, teamsY + teamsH / 2, contentW * 0.43, '900 16px Arial, Helvetica, sans-serif', '#160b07')
-    drawCenteredText(ctx, 'x', midCX, teamsY + teamsH / 2, 18, '900 12px Arial, Helvetica, sans-serif', '#6d6258')
-    drawCenteredText(ctx, game.away || 'Visitante', rightCX, teamsY + teamsH / 2, contentW * 0.43, '900 16px Arial, Helvetica, sans-serif', '#160b07')
+    drawCenteredText(ctx, game.home || 'Mandante', leftCX, teamsY + teamsH / 2, contentW * 0.43, '900 19px Arial, Helvetica, sans-serif', '#160b07')
+    drawCenteredText(ctx, 'x', midCX, teamsY + teamsH / 2, 20, '900 14px Arial, Helvetica, sans-serif', '#6d6258')
+    drawCenteredText(ctx, game.away || 'Visitante', rightCX, teamsY + teamsH / 2, contentW * 0.43, '900 19px Arial, Helvetica, sans-serif', '#160b07')
 
     ctx.fillStyle = '#fff8db'
     ctx.fillRect(x + matchW - oddsW, y, oddsW, rowH)
