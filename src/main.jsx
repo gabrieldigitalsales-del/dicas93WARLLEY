@@ -56,7 +56,7 @@ const roundOptions = [
   'Grupo E - 1ª R','Grupo F - 1ª R','Grupo G - 1ª R','Grupo H - 1ª R'
 ]
 
-const channels = ['Deixar em branco','Sem transmissão','A definir','Globo','SporTV','SporTV 2','Premiere','ESPN','ESPN 2','ESPN 3','ESPN 4','Disney+','Paramount+','YouTube','YouTube (CazéTV)','YT (CazéTV)','CazéTV','SportyNet','YT SportyNet','Globoplay (GE TV)','NSports','GOAT','YouTube (GOAT)','Xports','Band','Record','SBT','Prime Video','DAZN','TNT Sports','Apple TV','Max','Canal UOL','Nosso Futebol','TV Brasil','FIFA+','CONMEBOL TV','CBF TV','FPF TV','Paulistão Play','UOL Play','OneFootball','Pluto TV','Twitch','Facebook','Fox Sports','Telemundo','Univision','TUDN','beIN Sports','Sky Sports','BBC','ITV','Viaplay','Canal+','Movistar+','Movistar LaLiga','Movistar Liga de Campeões','LaLiga TV','Sport TV','Eleven Sports','RTP','SIC','TVI','Rai Sport','Mediaset','ARD','ZDF','Optus Sport']
+const channels = ['Deixar em branco','Sem transmissão','A definir','Globo','SporTV','SporTV 2','Premiere','ESPN','ESPN 2','ESPN 3','ESPN 4','Disney+','Paramount+','YouTube','YouTube (CazéTV)','YT (CazéTV)','CazéTV','SportyNet','YT SportyNet','Globoplay (GE TV)','NSports','GOAT','YouTube (GOAT)','XSports','Band','Record','SBT','Prime Video','DAZN','TNT Sports','Apple TV','Max','Canal UOL','Nosso Futebol','TV Brasil','FIFA+','CONMEBOL TV','CBF TV','FPF TV','Paulistão Play','UOL Play','OneFootball','Pluto TV','Twitch','Facebook','Fox Sports','Telemundo','Univision','TUDN','beIN Sports','Sky Sports','BBC','ITV','Viaplay','Canal+','Movistar+','Movistar LaLiga','Movistar Liga de Campeões','LaLiga TV','Sport TV','Eleven Sports','RTP','SIC','TVI','Rai Sport','Mediaset','ARD','ZDF','Optus Sport']
 const globalTeamOptions = ['Flamengo','Palmeiras','Corinthians','São Paulo','Santos','Vasco da Gama','Botafogo','Fluminense','Cruzeiro','Atlético-MG','Grêmio','Internacional','Bahia','Fortaleza','Ceará','Sport','Vitória','Athletico-PR','Coritiba','Goiás','Bragantino','Juventude','Mirassol','América-MG','Atlético-GO','Remo','Paysandu','CRB','CSA','Náutico','Santa Cruz','Real Madrid','Barcelona','Atlético de Madrid','Athletic Club','Real Sociedad','Villarreal','Valencia','Sevilla','Betis','Girona','Manchester City','Manchester United','Liverpool','Arsenal','Chelsea','Tottenham','Newcastle','Aston Villa','Everton','West Ham','Leeds United','Bayern München','Borussia Dortmund','Bayer Leverkusen','RB Leipzig','Eintracht Frankfurt','Stuttgart','Wolfsburg','Paris Saint-Germain','Marseille','Lyon','Monaco','Lille','Nice','Rennes','Inter de Milão','Milan','Juventus','Napoli','Roma','Lazio','Atalanta','Fiorentina','Bologna','Torino','Benfica','Porto','Sporting','Braga','Vitória SC','Ajax','PSV','Feyenoord','Celtic','Rangers','River Plate','Boca Juniors','Racing','Independiente','San Lorenzo','Estudiantes','Peñarol','Nacional','Colo-Colo','Universidad de Chile','Olimpia','Cerro Porteño','Libertad','LDU Quito','Barcelona SC','Independiente del Valle','Atlético Nacional','Millonarios','América','Chivas','Cruz Azul','Pumas','Tigres','Monterrey','Toluca','Pachuca','León','Inter Miami','LA Galaxy','Los Angeles FC','New York City FC','Seattle Sounders','Atlanta United','Al-Hilal','Al-Nassr','Al-Ittihad','Al-Ahli','Al-Ain','Al-Sadd','Urawa Reds','Vissel Kobe','Yokohama F. Marinos','Ulsan Hyundai','Jeonbuk Hyundai Motors Motors','Al-Ahly','Zamalek','Wydad Casablanca','Raja Casablanca','Esperance Tunis','Mamelodi Sundowns','Pyramids FC','Brasil','Argentina','Uruguai','Colômbia','Chile','Paraguai','México','Estados Unidos','Canadá','Inglaterra','França','Espanha','Portugal','Alemanha','Itália','Holanda','Bélgica','Croácia','Marrocos','Japão','Coreia do Sul','Austrália','Egito','Senegal','Gana']
 const timeOptions = Array.from({ length: 24 * 12 }, (_, i) => `${String(Math.floor(i / 12)).padStart(2, '0')}h${String((i % 12) * 5).padStart(2, '0')}`)
 const oddsOptions = ['—', ...Array.from({ length: Math.round((15 - 1.1) / 0.05) + 1 }, (_, i) => (1.1 + i * 0.05).toFixed(2))]
@@ -83,7 +83,7 @@ function cleanRoundValue(value) {
 function normalizeChannelNameForSave(value) {
   const raw = String(value || '').trim()
   const n = norm(raw)
-  if (n === 'xsports' || n === 'x sports' || n === 'xport' || n === 'xports') return 'Xports'
+  if (n === 'xsports' || n === 'x sports' || n === 'xport' || n === 'xports') return 'XSports'
   return raw
 }
 
@@ -472,6 +472,7 @@ function channelColor(channel) {
     { keys: ['premiere'], color: '#1b0b06' },
     { keys: ['youtube', 'yt'], color: '#005eb8' },
     { keys: ['globo'], color: '#e30613' },
+    { keys: ['globoplay', 'ge tv'], color: '#00a86b' },
     { keys: ['espn 4'], color: '#7d0012' },
     { keys: ['espn 3'], color: '#850014' },
     { keys: ['espn 2'], color: '#8f0014' },

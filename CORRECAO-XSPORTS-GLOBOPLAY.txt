@@ -1,0 +1,5 @@
+Correção aplicada:
+- Padronizado para XSports, uma única vez.
+- Removidas variações Xports e X Sports.
+- Adicionado Globoplay (GE TV) na lista de transmissão.
+- Dropdown mantém deduplicação para não repetir nomes iguais.
