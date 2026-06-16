@@ -1,0 +1,8 @@
+Duplicados exatos encontrados na lista de transmissão:
+- XSports: 2 vezes
+
+Correção feita:
+- Removi duplicados com o nome exatamente igual.
+- Mantive variações diferentes como YouTube (CazéTV), YT (CazéTV) e CazéTV.
+- Corrigi XSports/X Sports para Xports.
+- Adicionei uma trava para o dropdown não exibir duplicado exato se a lista for editada no futuro.

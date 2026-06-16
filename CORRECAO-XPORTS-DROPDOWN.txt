@@ -1,0 +1,5 @@
+Correção aplicada:
+- XSports/X Sports foram padronizados para Xports.
+- O dropdown agora remove duplicados por nome normalizado, inclusive duplicados vindos de lista personalizada/localStorage.
+- Ao pesquisar 'xsp', o sistema não deve mais exibir várias linhas iguais.
+- O botão 'Usar' não aparece quando já existe uma opção semelhante na lista.
